@@ -2,19 +2,20 @@ package com.mac10_1.monsuivivehicule;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.ListView;
 
+import com.mac10_1.monsuivivehicule.utils.Car;
+import com.mac10_1.monsuivivehicule.utils.CarAdapter;
 import com.mac10_1.monsuivivehicule.utils.SQLiteHandler;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class MyCarsActivity extends AppCompatActivity {
 
@@ -36,6 +37,14 @@ public class MyCarsActivity extends AppCompatActivity {
         listViewCar = (ListView) findViewById(R.id.list_view_cars);
 
         db = new SQLiteHandler(getApplicationContext());
+
+        db.addCar("EB-643-YV","VW", "GOLF IV", 2004, "HJGSDHJGFHJSDGJFHGSJHFG");
+        db.addCar("32-3-4","Audi", "A3", 2004, "331232414324HFG");
+
+        List<Car> cars = db.getCarsList();
+
+        CarAdapter adapter = new CarAdapter(MyCarsActivity.this, cars);
+        listViewCar.setAdapter(adapter);
 
 
         FloatingActionButton newCarButton = (FloatingActionButton) findViewById(R.id.fab);

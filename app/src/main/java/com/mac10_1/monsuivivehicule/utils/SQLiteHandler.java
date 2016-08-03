@@ -10,6 +10,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.StringTokenizer;
 
 /**
@@ -19,7 +20,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
     private static final String TAG = SQLiteHandler.class.getSimpleName();
 
-    private static final int DATABASE_VERSION = 0;
+    private static final int DATABASE_VERSION = 3;
 
     private static final String DATABASE_NAME = "suiviVehicules";
 
@@ -40,7 +41,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
     private static final String KEY_MARQUE = "marque";
     private static final String KEY_MODELE = "modele";
     private static final String KEY_MILLESIME = "millesime";
-    private static final String KEY_IMAGE = "image";
+    private static final String KEY_CHASSIS = "n_chassis";
 
     //facture table collumn name
     private static final String KEY_NUM_FACTURE = "id_facture";
@@ -63,7 +64,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         String CREATE_CAR_TABLE = "CREATE TABLE " + TABLE_CAR + "("
                 + KEY_ID_CAR + " INTEGER PRIMARY KEY," + KEY_IMMATRICULATION + " VARCHAR(255) NOT NULL,"
                 + KEY_MARQUE + " VARCHAR(255)," + KEY_MODELE + " VARCHAR(255),"
-                + KEY_MILLESIME + " INTEGER" + KEY_IMAGE + " VARCHAR(255)" +")";// + " DEFAULT CHARSET=utf8";
+                + KEY_MILLESIME + " INTEGER, " + KEY_CHASSIS + " VARCHAR(255)" +")";// + " DEFAULT CHARSET=utf8";
         db.execSQL(CREATE_CAR_TABLE);
 
         String CREATE_FACTURE_TABLE = "CREATE TABLE " + TABLE_FACTURE + "("
@@ -77,11 +78,11 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         db.execSQL(CREATE_REPARATION_TABLE);
 
         String CREATE_CAR_FACT_TABLE = "CREATE TABLE " + TABLE_CAR_FACT + "("
-                + KEY_ID_CAR + " INTEGER PRIMARY KEY," + KEY_NUM_FACTURE + " INTEGER PRIMARY KEY" + ")";
+                + KEY_ID_CAR + " INTEGER ," + KEY_NUM_FACTURE + " INTEGER, " + " PRIMARY KEY ( "+KEY_ID_CAR +", "+ KEY_NUM_FACTURE +"))";
         db.execSQL(CREATE_CAR_FACT_TABLE);
 
         String CREATE_FACT_REP_TABLE = "CREATE TABLE " + TABLE_FACT_REP + "("
-                + KEY_NUM_FACTURE + "INTEGER PRIMARY KEY," + KEY_ID_REP + "INTEGER PRIMARY KEY" + ")";
+                + KEY_NUM_FACTURE + " INTEGER, " + KEY_ID_REP + " INTEGER, " + "PRIMARY KEY ( "+KEY_NUM_FACTURE+", "+ KEY_ID_REP + "))";
         db.execSQL(CREATE_FACT_REP_TABLE);
 
         Log.d(TAG, "Database tables created");
@@ -96,6 +97,8 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_CAR);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_FACTURE);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_REPARATION);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_CAR_FACT);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_FACT_REP);
 
         // Create tables again
         onCreate(db);
@@ -104,7 +107,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
     /**
      * Storing new car details in database
      */
-    public void addCar(String immatriculation, String marque, String modele, int millesime, String image) {
+    public void addCar(String immatriculation, String marque, String modele, int millesime, String nchasssis) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -112,7 +115,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         values.put(KEY_MARQUE, marque);
         values.put(KEY_MODELE, modele);
         values.put(KEY_MILLESIME, millesime);
-        values.put(KEY_IMAGE, image);
+        values.put(KEY_CHASSIS, nchasssis);
 
         // Inserting Row
         long id = db.insert(TABLE_CAR, null, values);
@@ -178,6 +181,38 @@ public class SQLiteHandler extends SQLiteOpenHelper {
     }
 
 
+    public List<Car> getCarsList(){
+        List<Car> carList = new ArrayList<Car>();
+
+        String selectQuery = "SELECT * FROM " + TABLE_CAR;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        //Move to first row
+        cursor.moveToFirst();
+        if (cursor.getCount() > 0) {
+            do {
+                Car car = new Car();
+                car.setImmatriculation((String) cursor.getString(1));
+                car.setMarque((String) cursor.getString(2));
+                car.setModele((String) cursor.getString(3));
+                car.setMillesime((int) cursor.getInt(4));
+                car.setNchassis((String) cursor.getString(5));
+                //car.put(KEY_ID_CAR, (int) cursor.getInt(0));
+
+                carList.add(car);
+
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+
+        Log.d(TAG, "Fetching all cars from sqlite: " + carList.toString());
+
+        return carList;
+
+
+    }
+    /*
     public ArrayList<HashMap<String, ?>> getCarsList() {
 
         ArrayList<HashMap<String, ?>> carList = new ArrayList<HashMap<String, ?>>();
@@ -195,7 +230,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
                 car.put(KEY_MARQUE, (String) cursor.getString(2));
                 car.put(KEY_MODELE, (String) cursor.getString(3));
                 car.put(KEY_MILLESIME, (int) cursor.getInt(4));
-                car.put(KEY_IMAGE, (String) cursor.getString(5));
+                car.put(KEY_CHASSIS, (String) cursor.getString(5));
 
                 carList.add(car);
 
@@ -209,11 +244,12 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         return carList;
 
     }
+    */
 
     public ArrayList<HashMap<String, ?>> getFactures(int id_car){
         ArrayList<HashMap<String, ?>> factureList = new ArrayList<HashMap<String, ?>>();
         SQLiteDatabase db = getReadableDatabase();
-//TODO change SELECT* with just necesseary to parse the rest
+//TODO change SELECT* with just necesseary to parse from the rest
         String selectQuery = "SELECT * FROM " + TABLE_CAR_FACT +" a INNER JOIN "+ TABLE_FACTURE + " b ON a."+KEY_NUM_FACTURE+"=b."+KEY_NUM_FACTURE
                 + " WHERE a."+KEY_ID_CAR+"=?";
 
@@ -245,7 +281,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
     public ArrayList<HashMap<String, ?>> getReparations(int num_facture){
         ArrayList<HashMap<String, ?>> reparationList = new ArrayList<HashMap<String, ?>>();
         SQLiteDatabase db = getReadableDatabase();
-//TODO change SELECT* with just necesseary to parse the rest
+//TODO change SELECT* with just necesseary to parse from the rest
         String selectQuery = "SELECT * FROM " + TABLE_FACT_REP +" a INNER JOIN "+ TABLE_REPARATION + " b ON a."+KEY_ID_REP+"=b."+KEY_ID_REP
                 + " WHERE a."+KEY_NUM_FACTURE+"=?";
 

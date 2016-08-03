@@ -1,20 +1,27 @@
 package com.mac10_1.monsuivivehicule.utils;
 
+import java.util.Arrays;
+
 /**
  * Created by mac10-1 on 02/08/2016.
  */
 public class Car {
 
+    int id;
     String immatriculation;
-    String imagePath;
+    String nchassis;
     String marque;
     String modele;
+    int logo;
     int millesime;
     Facture[] factures;
 
-    public Car(String immatriculation, String imagePath, String marque, String modele, int millesime) {
+    public Car() {
+    }
+
+    public Car(String immatriculation, String nchassis, String marque, String modele, int millesime) {
         this.immatriculation = immatriculation;
-        this.imagePath = imagePath;
+        this.nchassis = nchassis;
         this.marque = marque;
         this.modele = modele;
         this.millesime = millesime;
@@ -30,8 +37,8 @@ public class Car {
         return immatriculation;
     }
 
-    public String getImagePath() {
-        return imagePath;
+    public String getNchassis() {
+        return nchassis;
     }
 
     public String getMarque() {
@@ -46,12 +53,16 @@ public class Car {
         return millesime;
     }
 
+    public int getLogo(){
+        return logo;
+    }
+
     public void setImmatriculation(String immatriculation) {
         this.immatriculation = immatriculation;
     }
 
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
+    public void setNchassis(String imagePath) {
+        this.nchassis = imagePath;
     }
 
     public void setMarque(String marque) {
@@ -66,5 +77,16 @@ public class Car {
         this.millesime = millesime;
     }
 
-
+    @Override
+    public String toString() {
+        return "Car{" +
+                "immatriculation='" + immatriculation + '\'' +
+                ", nchassis='" + nchassis + '\'' +
+                ", marque='" + marque + '\'' +
+                ", modele='" + modele + '\'' +
+                ", logo=" + logo +
+                ", millesime=" + millesime +
+                ", factures=" + Arrays.toString(factures) +
+                '}';
+    }
 }
