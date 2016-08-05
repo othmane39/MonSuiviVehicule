@@ -18,6 +18,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".InfoCarActivity"
+            android:label="@string/title_activity_info_car"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

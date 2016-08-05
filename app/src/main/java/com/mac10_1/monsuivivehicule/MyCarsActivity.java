@@ -40,12 +40,15 @@ public class MyCarsActivity extends AppCompatActivity {
 
         db.addCar("EB-643-YV","VW", "GOLF IV", 2004, "HJGSDHJGFHJSDGJFHGSJHFG");
         db.addCar("32-3-4","Audi", "A3", 2004, "331232414324HFG");
+        db.addMemo(1, "Vidange", 275349, "km");
+        db.addMemo(1, "Filtre a air", 290349, "km");
+        db.addMemo(1, "Filtre a carburant", 290349, "km");
 
         List<Car> cars = db.getCarsList();
 
         CarAdapter adapter = new CarAdapter(MyCarsActivity.this, cars);
         listViewCar.setAdapter(adapter);
-
+        listViewCar.setOnItemClickListener(adapter);
 
         FloatingActionButton newCarButton = (FloatingActionButton) findViewById(R.id.fab);
         newCarButton.setOnClickListener(new View.OnClickListener() {

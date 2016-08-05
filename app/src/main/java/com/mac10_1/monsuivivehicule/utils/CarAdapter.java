@@ -1,13 +1,17 @@
 package com.mac10_1.monsuivivehicule.utils;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.mac10_1.monsuivivehicule.InfoCarActivity;
+import com.mac10_1.monsuivivehicule.MyCarsActivity;
 import com.mac10_1.monsuivivehicule.R;
 
 import java.util.List;
@@ -15,10 +19,14 @@ import java.util.List;
 /**
  * Created by mac10-1 on 03/08/2016.
  */
-public class CarAdapter extends ArrayAdapter<Car>{
+public class CarAdapter extends ArrayAdapter<Car> implements AdapterView.OnItemClickListener {
 
+    Context context;
+    List<Car> cars;
     public CarAdapter(Context context, List<Car> cars){
         super(context, 0, cars);
+        this.context = context;
+        this.cars = cars;
     }
 
     @Override
@@ -55,5 +63,13 @@ public class CarAdapter extends ArrayAdapter<Car>{
         public TextView modele;
         public TextView chassis;
         public ImageView logo;
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Car car = cars.get(position);
+        Intent intent = new Intent(context, InfoCarActivity.class);
+        intent.putExtra("Car", car);
+        context.startActivity(intent);
     }
 }
