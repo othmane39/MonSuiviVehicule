@@ -22,9 +22,8 @@ public class MyCarsActivity extends AppCompatActivity {
 
 
     private ListView listViewCar;
-    private ArrayList<HashMap<String, ?>> listCar;
     private SQLiteHandler db;
-
+    private List<Car> cars;
 
 
     @Override
@@ -45,7 +44,7 @@ public class MyCarsActivity extends AppCompatActivity {
         db.addMemo(1, "Filtre a air", 290349, "km");
         db.addMemo(1, "Filtre a carburant", 290349, "km");
 */
-        List<Car> cars = db.getCarsList();
+        cars = db.getCarsList();
 
         CarAdapter adapter = new CarAdapter(MyCarsActivity.this, cars);
         listViewCar.setAdapter(adapter);

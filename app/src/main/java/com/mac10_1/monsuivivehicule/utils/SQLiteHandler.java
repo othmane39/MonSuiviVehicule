@@ -390,5 +390,13 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
     }
 
+    public boolean removeMemoById(int id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        int r = db.delete(TABLE_MEMO_CAR, KEY_ID_MEMO + "=" + id, null);
+        db.close();
+        return r>0;
+
+    }
+
 
 }

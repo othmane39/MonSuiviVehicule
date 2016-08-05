@@ -2,9 +2,15 @@ package com.mac10_1.monsuivivehicule.Fragment;
 
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -29,6 +35,8 @@ public class InfoCarActivityFragment extends Fragment {
     private ImageView logo;
     private SQLiteHandler db;
     private Car car;
+    private List<MemoCar> memoCarList;
+    private MemoCarAdapter adapter;
 
     public InfoCarActivityFragment() {
     }
@@ -53,11 +61,47 @@ public class InfoCarActivityFragment extends Fragment {
         modele.setText(car.getModele());
         nchassis.setText(car.getNchassis());
 
-        List<MemoCar> memoCarList = db.getMemoCarList(car.getId_car());
-        MemoCarAdapter adapter = new MemoCarAdapter(getContext(), memoCarList);
+        memoCarList = db.getMemoCarList(car.getId_car());
+        adapter = new MemoCarAdapter(getContext(), memoCarList);
         memoList.setAdapter(adapter);
+        registerForContextMenu(memoList);
 
         return rootView;
 
     }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        if (v.getId()==R.id.memo_list) {
+            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+            //menu.setHeaderTitle("Vidange");
+            String[] menuItems = {"modifier", "supprimer"};
+            for (int i = 0; i<menuItems.length; i++) {
+                menu.add(Menu.NONE, i, i, menuItems[i]);
+            }
+            Log.e("TAG", "onCreate");
+        }
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+        int menuItemIndex = item.getItemId();
+        if(menuItemIndex == 0){ //modifier
+
+        }else if(menuItemIndex == 1){ //supprimer
+            if(db.removeMemoById(memoCarList.get(info.position).getIdMemo())) {
+                Log.d("DB", "memo removed successfully");
+                memoCarList = db.getMemoCarList(car.getId_car());
+                adapter.clear();
+                adapter.addAll(memoCarList);
+                adapter.notifyDataSetChanged();
+            }
+
+
+        }
+
+        return true;
+    }
+
 }
