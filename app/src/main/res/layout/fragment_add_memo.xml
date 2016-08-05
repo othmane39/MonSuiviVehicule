@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.InfoCarActivity">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:paddingTop="12dp">
+
+
+                <!--****NAME TEXT****-->
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="16dp">
+
+                    <TextView
+                        android:layout_weight="2.5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="NOM DU MEMO"
+                        android:textColor="#333333" />
+
+                    <TextView
+                        android:layout_width="238dp"
+                        android:layout_height="wrap_content"
+                        android:text="Le texte du memo a ajouter"
+                        android:textColor="#c3c3c3" />
+                </LinearLayout>
+
+
+                <!--****Memo Text****-->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:paddingTop="16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        >
+
+                        <EditText
+                            android:id="@+id/memo_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColorHint="#333333"
+                            android:background="#00000000"
+                            android:maxLines="1" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="#dad8d8" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+                <!--****Memo Value****-->
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingTop="16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingTop="12dp">
+
+                        <TextView
+                            android:layout_weight="1.9"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="VALEUR DU MEMO"
+                            android:textColor="#333333" />
+
+                        <TextView
+                            android:layout_width="216dp"
+                            android:layout_height="wrap_content"
+                            android:text="La valeur numerique du mémo"
+                            android:textColor="#c3c3c3"
+                            />
+                    </LinearLayout>
+                </LinearLayout>
+
+
+
+                <!--****CARD NO.****-->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <EditText
+                            android:id="@+id/memo_value"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColorHint="#333333"
+                            android:background="#00000000"
+                            android:maxLines="1"
+                            android:inputType="number"
+                            />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="#dad8d8" />
+                    </LinearLayout>
+                </LinearLayout>
+
+
+                ****CVV****
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingTop="16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingTop="12dp">
+
+                        <TextView
+                            android:layout_weight="5.5"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Unité"
+                            android:textColor="#333333"
+                            />
+
+                        <TextView
+                            android:id="@+id/ccv2"
+                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="L&apos;unité du mémo à ajouter"
+                            android:textColor="#c3c3c3"
+                            />
+                    </LinearLayout>
+                </LinearLayout>
+
+
+                <!--****CVV NO.****-->
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="16dp"
+                    >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+
+                        >
+
+                        <EditText
+                            android:id="@+id/memo_unit"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColorHint="#333333"
+                            android:background="#00000000"
+                            android:inputType="text"
+                            android:maxLength="3" />
+
+                        <View
+                            android:layout_width="62dp"
+                            android:layout_height="1dp"
+                            android:background="#dad8d8" />
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+    <!--****PAY****-->
+
+</RelativeLayout>

@@ -1,6 +1,9 @@
 package com.mac10_1.monsuivivehicule.Fragment;
 
-import android.support.v4.app.Fragment;
+
+import android.annotation.SuppressLint;
+import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -15,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.mac10_1.monsuivivehicule.Activity.InfoCarActivity;
 import com.mac10_1.monsuivivehicule.R;
 import com.mac10_1.monsuivivehicule.utils.Car;
 import com.mac10_1.monsuivivehicule.utils.MemoCar;
@@ -38,8 +42,6 @@ public class InfoCarActivityFragment extends Fragment {
     private List<MemoCar> memoCarList;
     private MemoCarAdapter adapter;
 
-    public InfoCarActivityFragment() {
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
