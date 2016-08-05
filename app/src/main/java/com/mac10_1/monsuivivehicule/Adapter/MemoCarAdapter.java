@@ -1,4 +1,4 @@
-package com.mac10_1.monsuivivehicule.utils;
+package com.mac10_1.monsuivivehicule.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.mac10_1.monsuivivehicule.R;
+import com.mac10_1.monsuivivehicule.utils.MemoCar;
 
 import java.util.List;
 

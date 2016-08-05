@@ -1,23 +1,20 @@
-package com.mac10_1.monsuivivehicule;
+package com.mac10_1.monsuivivehicule.Fragment;
 
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.mac10_1.monsuivivehicule.R;
 import com.mac10_1.monsuivivehicule.utils.Car;
 import com.mac10_1.monsuivivehicule.utils.MemoCar;
-import com.mac10_1.monsuivivehicule.utils.MemoCarAdapter;
+import com.mac10_1.monsuivivehicule.Adapter.MemoCarAdapter;
 import com.mac10_1.monsuivivehicule.utils.SQLiteHandler;
 
-import java.util.HashMap;
 import java.util.List;
 
 /**

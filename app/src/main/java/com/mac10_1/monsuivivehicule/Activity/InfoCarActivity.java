@@ -1,4 +1,4 @@
-package com.mac10_1.monsuivivehicule;
+package com.mac10_1.monsuivivehicule.Activity;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -6,6 +6,8 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+
+import com.mac10_1.monsuivivehicule.R;
 
 public class InfoCarActivity extends AppCompatActivity {
 

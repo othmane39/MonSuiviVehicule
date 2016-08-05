@@ -1,4 +1,4 @@
-package com.mac10_1.monsuivivehicule;
+package com.mac10_1.monsuivivehicule.Activity;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -9,8 +9,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 
+import com.mac10_1.monsuivivehicule.R;
 import com.mac10_1.monsuivivehicule.utils.Car;
-import com.mac10_1.monsuivivehicule.utils.CarAdapter;
+import com.mac10_1.monsuivivehicule.Adapter.CarAdapter;
 import com.mac10_1.monsuivivehicule.utils.SQLiteHandler;
 
 import java.util.ArrayList;
@@ -37,13 +38,13 @@ public class MyCarsActivity extends AppCompatActivity {
         listViewCar = (ListView) findViewById(R.id.list_view_cars);
 
         db = new SQLiteHandler(getApplicationContext());
-
+/*
         db.addCar("EB-643-YV","VW", "GOLF IV", 2004, "HJGSDHJGFHJSDGJFHGSJHFG");
         db.addCar("32-3-4","Audi", "A3", 2004, "331232414324HFG");
         db.addMemo(1, "Vidange", 275349, "km");
         db.addMemo(1, "Filtre a air", 290349, "km");
         db.addMemo(1, "Filtre a carburant", 290349, "km");
-
+*/
         List<Car> cars = db.getCarsList();
 
         CarAdapter adapter = new CarAdapter(MyCarsActivity.this, cars);

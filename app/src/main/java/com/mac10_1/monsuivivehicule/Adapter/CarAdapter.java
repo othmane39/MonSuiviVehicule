@@ -1,4 +1,4 @@
-package com.mac10_1.monsuivivehicule.utils;
+package com.mac10_1.monsuivivehicule.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,9 +10,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.mac10_1.monsuivivehicule.InfoCarActivity;
-import com.mac10_1.monsuivivehicule.MyCarsActivity;
+import com.mac10_1.monsuivivehicule.Activity.InfoCarActivity;
 import com.mac10_1.monsuivivehicule.R;
+import com.mac10_1.monsuivivehicule.utils.Car;
 
 import java.util.List;
 
