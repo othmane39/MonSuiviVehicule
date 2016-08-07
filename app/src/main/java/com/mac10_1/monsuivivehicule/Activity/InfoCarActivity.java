@@ -83,11 +83,19 @@ public class InfoCarActivity extends AppCompatActivity implements View.OnClickLi
 
     }
 
-    
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        if(addMemoFragment != null && addMemoFragment.isVisible()){
+            //addMemoFragment.addMemo();
+            toolbar.setTitle("Info Vehicule");
+            //Snackbar.make(view, "Mémo enregistré", Snackbar.LENGTH_LONG)
+            //.setAction("Action", null).show();
+            fab.setImageResource(android.R.drawable.ic_input_add);
+            getFragmentManager().popBackStack();
 
 
-
-
-
-
+        }
+        else super.onBackPressed();
+    }
 }
