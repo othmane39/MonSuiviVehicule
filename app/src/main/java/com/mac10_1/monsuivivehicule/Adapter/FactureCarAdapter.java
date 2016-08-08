@@ -43,7 +43,7 @@ public class FactureCarAdapter extends ArrayAdapter<Facture> {
 
         //il ne reste plus qu'à remplir notre vue
         viewHolder.no.setText(String.valueOf(facture.getNumFacture()));
-        viewHolder.date.setText(String.valueOf("Le " +facture.getDate()));
+        viewHolder.date.setText(String.valueOf(facture.getDate()));
         viewHolder.total.setText(String.valueOf(facture.getTotalFacture() + " DH"));
         //viewHolder.logo.setImageDrawable(new ColorDrawable(car.getLogo()));
 
