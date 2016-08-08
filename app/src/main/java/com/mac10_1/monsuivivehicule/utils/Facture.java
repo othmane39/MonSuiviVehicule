@@ -11,7 +11,7 @@ public class Facture {
     private int idFact;
     private int idCar;
     private int numFacture;
-    private Date date;
+    private String date;
     private int kilometrage;
     private double totalFacture;
     private List<Reparation> reparations;
@@ -19,7 +19,7 @@ public class Facture {
     public Facture(){
         totalFacture = 0;
     }
-    public Facture(int idFact, int idCar, int numFacture, Date date, int kilometrage, double totalFacture) {
+    public Facture(int idFact, int idCar, int numFacture, String date, int kilometrage, double totalFacture) {
         this.idFact = idFact;
         this.idCar = idCar;
         this.numFacture = numFacture;
@@ -37,7 +37,7 @@ public class Facture {
     public int getNumFacture() {
         return numFacture;
     }
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
     public int getKilometrage() {
@@ -59,7 +59,7 @@ public class Facture {
     public void setNumFacture(int numFacture) {
         this.numFacture = numFacture;
     }
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
     public void setKilometrage(int kilometrage) {

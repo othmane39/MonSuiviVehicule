@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="6dp"
+    android:layout_marginRight="6dp"
+
+
+    >
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="200dp"
+        android:src="@drawable/facture_no_cadre"
+        android:scaleType="fitXY"
+        android:adjustViewBounds="true"
+        android:id="@+id/imageView2"
+        android:layout_gravity="center_horizontal"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:textColor="@color/black"
+                android:textSize="35sp"
+                android:text="4324238"
+
+                android:id="@+id/facture_no"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="6dp"/>
+
+            <TextView
+                android:id="@+id/facture_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="27sp"
+                android:text="23-04-2016"
+                android:textColor="@color/black"
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="140dp"
+                android:layout_marginLeft="18dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17sp"
+                android:text="3400 Dh"
+                android:textColor="@color/black"
+                android:id="@+id/facture_total"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="148dp"
+                android:layout_marginRight="20dp"
+
+                />
+        </RelativeLayout>
+
+
+
+
+
+
+
+
+</RelativeLayout>

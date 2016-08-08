@@ -18,6 +18,7 @@ import com.mac10_1.monsuivivehicule.Adapter.CarAdapter;
 import com.mac10_1.monsuivivehicule.utils.SQLiteHandler;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -34,9 +35,17 @@ public class MyCarsActivity extends AppCompatActivity {
 
 
         //listViewCar = (ListView) findViewById(R.id.list_view_cars);
-
-        //db = new SQLiteHandler(getApplicationContext());
 /*
+        SQLiteHandler db = new SQLiteHandler(getApplicationContext());
+        db.addCar("EB-643-YV","VW", "GOLF IV", 2004, "HJGSDHJGFHJSDGJFHGSJHFG");
+        db.addCar("32-3-4","Audi", "A3", 2004, "331232414324HFG");
+        db.addMemo(1, "Vidange", 275349, "km");
+        db.addMemo(1, "Filtre a air", 290349, "km");
+        db.addMemo(1, "Filtre a carburant", 290349, "km");
+        db.addFacture(1, 2435627, "2016-08-14", 286457, 3456.8);
+        db.addFacture(1, 242442, "2016-09-14", 266457, 2500);
+        //db = new SQLiteHandler(getApplicationContext());
+
         db.addCar("EB-643-YV","VW", "GOLF IV", 2004, "HJGSDHJGFHJSDGJFHGSJHFG");
         db.addCar("32-3-4","Audi", "A3", 2004, "331232414324HFG");
         db.addMemo(1, "Vidange", 275349, "km");

@@ -1,6 +1,7 @@
 package com.mac10_1.monsuivivehicule.Fragment;
 
 import android.app.Fragment;
+import android.graphics.Picture;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -8,6 +9,7 @@ import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mac10_1.monsuivivehicule.R;
@@ -27,7 +29,7 @@ public class AddMemoFragment extends Fragment {
     private TextView unit;
     private TextView value;
     private Car car;
-    private FloatingActionButton fab;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -38,7 +40,6 @@ public class AddMemoFragment extends Fragment {
         name = (TextView) rootView.findViewById(R.id.memo_name);
         value = (TextView) rootView.findViewById(R.id.memo_value);
         unit = (TextView) rootView.findViewById(R.id.memo_unit);
-        fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
 
         db = new SQLiteHandler(getContext());
 

@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -20,7 +21,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
     private static final String TAG = SQLiteHandler.class.getSimpleName();
 
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 8;
 
     private static final String DATABASE_NAME = "suiviVehicules";
 
@@ -80,7 +81,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         db.execSQL(CREATE_CAR_TABLE);
 
         String CREATE_FACTURE_TABLE = "CREATE TABLE " + TABLE_FACTURE + "(" + KEY_ID_FACTURE + " INTEGER PRIMARY KEY, "
-                + KEY_ID_CAR + " INTEGER NOT NULL," + KEY_NUM_FACTURE + " INTEGER," + KEY_DATE + " INTEGER,"
+                + KEY_ID_CAR + " INTEGER NOT NULL," + KEY_NUM_FACTURE + " INTEGER," + KEY_DATE + " date,"
                 + KEY_KILOMETRAGE + " INTEGER," + KEY_TOTAL + " REAL, "
                 + " FOREIGN KEY ("+ KEY_ID_CAR + ") REFERENCES " + TABLE_CAR + "("+ KEY_ID_CAR +"))";// + " DEFAULT CHARSET=utf8";
         db.execSQL(CREATE_FACTURE_TABLE);
@@ -137,13 +138,13 @@ public class SQLiteHandler extends SQLiteOpenHelper {
     /**
      * Storing new facture details in database
      */
-    public void addFacture(int id_car , int num_facture, Date date , int kilometrage, double total) {
+    public void addFacture(int id_car , int num_facture, String date , int kilometrage, double total) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(KEY_NUM_FACTURE, num_facture);
         values.put(KEY_ID_CAR, id_car);
-        values.put(KEY_DATE, date.getTime());  //TODO a verifier!!
+        values.put(KEY_DATE, date);  //TODO a verifier!!
         values.put(KEY_KILOMETRAGE, kilometrage);
         values.put(KEY_TOTAL, total);
 
@@ -243,7 +244,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
                 facture.setIdFact((int) cursor.getInt(0));
                 facture.setIdCar((int) cursor.getInt(1));
                 facture.setNumFacture((int) cursor.getInt(2));
-                facture.setDate((Date) new Date(cursor.getLong(3)));
+                facture.setDate((String) cursor.getString(3));
                 facture.setKilometrage((int) cursor.getInt(4));
                 facture.setTotalFacture((double) cursor.getDouble(5));
                 facture.setReparations(getReparationsList(id_facture));
@@ -308,7 +309,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
                 facture.setIdFact((int) cursor.getInt(0));
                 facture.setIdCar((int) cursor.getInt(1));
                 facture.setNumFacture((int) cursor.getInt(2));
-                facture.setDate((Date) new Date(cursor.getLong(3)));
+                facture.setDate((String) cursor.getString(3));
                 facture.setKilometrage((int) cursor.getInt(4));
                 facture.setTotalFacture((double) cursor.getDouble(5));
 
