@@ -4,8 +4,12 @@ import android.app.Application;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
+import android.view.animation.DecelerateInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
@@ -34,7 +38,7 @@ public class InfoCarFABHandler implements View.OnClickListener{
         this.fram2 = fram2;
         this.fab_buttons_layout = fab_buttons_layout;
 
-        show_layout = AnimationUtils.loadAnimation(application, R.anim.fab1_show);
+        //show_layout = AnimationUtils.loadAnimation(application, R.anim.fab1_show);
 
 
 
@@ -44,20 +48,29 @@ public class InfoCarFABHandler implements View.OnClickListener{
     private void expandFAB() {
 
 
-        Animation animation = new TranslateAnimation(500, 0,0, 0);
-        animation.setDuration(300);
+        AnimationSet animationSet = new AnimationSet(true);
 
-        fram1.startAnimation(animation);
+        Animation animation = new TranslateAnimation(500, 0,0, 0);
+        Animation animation1 = new AlphaAnimation((float)0.,(float)1.);
+        animation.setDuration(300);
+        animation1.setDuration(450);
+        animation1.setInterpolator(new DecelerateInterpolator());
+        animationSet.addAnimation(animation);
+        animationSet.addAnimation(animation1);
+
+
+        fram1.startAnimation(animationSet);
         fram1.setVisibility(View.VISIBLE);
         fram1.setClickable(true);
 
-        fram2.startAnimation(animation);
+        fram2.startAnimation(animationSet);
         fram2.setVisibility(View.VISIBLE);
         fram2.setClickable(true);
 
 
-        fab_buttons_layout.startAnimation(show_layout);
+
         fab_buttons_layout.setBackgroundColor(Color.parseColor("#DD000000"));
+        fab_buttons_layout.startAnimation(animation1);
         fab_buttons_layout.setOnClickListener(this);
         fab_buttons_layout.setClickable(true);
 
@@ -65,21 +78,29 @@ public class InfoCarFABHandler implements View.OnClickListener{
 
     private void hideFAB() {
 
+        AnimationSet animationSet = new AnimationSet(true);
         Animation animation = new TranslateAnimation(0, 500,0, 0);
+        Animation animation1 = new AlphaAnimation((float)1.,(float)0.);
         animation.setDuration(300);
+        animation1.setDuration(450);
+        animation1.setInterpolator(new DecelerateInterpolator());
+        animationSet.addAnimation(animation);
+        animationSet.addAnimation(animation1);
 
 
-        fram1.startAnimation(animation);
+        fram1.startAnimation(animationSet);
         fram1.setVisibility(View.INVISIBLE);
         fram1.setClickable(false);
 
-        fram2.startAnimation(animation);
+        fram2.startAnimation(animationSet);
         fram2.setVisibility(View.INVISIBLE);
         fram2.setClickable(false);
 
         //fab_buttons_layout.startAnimation(hide_layout);
+
         fab_buttons_layout.setBackgroundColor(Color.parseColor("#00000000"));
-        fab_buttons_layout.setVisibility(View.INVISIBLE);
+        fab_buttons_layout.startAnimation(animation1);
+        //fab_buttons_layout.setVisibility(View.INVISIBLE);
         fab_buttons_layout.setClickable(false);
         //fab_buttons_layout.setOnClickListener(null);
 
