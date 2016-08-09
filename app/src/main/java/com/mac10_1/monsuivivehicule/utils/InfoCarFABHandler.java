@@ -1,10 +1,14 @@
 package com.mac10_1.monsuivivehicule.utils;
 
 import android.app.Application;
+import android.graphics.Color;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.TranslateAnimation;
 import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 
 import com.mac10_1.monsuivivehicule.R;
 
@@ -15,84 +19,72 @@ public class InfoCarFABHandler implements View.OnClickListener{
 
     FrameLayout fram1;
     FrameLayout fram2;
-    FrameLayout fram3;
+
+    RelativeLayout fab_buttons_layout;
 
     private boolean FAB_Status = false;
 
-    //Animations
-    Animation show_fab_1;
-    Animation hide_fab_1;
-    Animation show_fab_2;
-    Animation hide_fab_2;
-    Animation show_fab_3;
-    Animation hide_fab_3;
 
-    public InfoCarFABHandler(Application application, FrameLayout fram1, FrameLayout fram2, FrameLayout fram3) {
+    Animation show_layout;
+
+
+
+    public InfoCarFABHandler(Application application, FrameLayout fram1, FrameLayout fram2, RelativeLayout fab_buttons_layout) {
         this.fram1 = fram1;
         this.fram2 = fram2;
-        this.fram3 = fram3;
-        show_fab_1 = AnimationUtils.loadAnimation(application, R.anim.fab1_show);
-        hide_fab_1 = AnimationUtils.loadAnimation(application, R.anim.fab1_hide);
-        show_fab_2 = AnimationUtils.loadAnimation(application, R.anim.fab2_show);
-        hide_fab_2 = AnimationUtils.loadAnimation(application, R.anim.fab2_hide);
-        show_fab_3 = AnimationUtils.loadAnimation(application, R.anim.fab3_show);
-        hide_fab_3 = AnimationUtils.loadAnimation(application, R.anim.fab3_hide);
+        this.fab_buttons_layout = fab_buttons_layout;
+
+        show_layout = AnimationUtils.loadAnimation(application, R.anim.fab1_show);
+
+
+
+
     }
 
     private void expandFAB() {
 
-        //Floating Action Button 1
-        FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) fram1.getLayoutParams();
-        layoutParams.rightMargin += (int) (fram1.getWidth() * 1.);
-        layoutParams.bottomMargin += (int) (fram1.getHeight() * 0.25);
-        fram1.setLayoutParams(layoutParams);
-        fram1.startAnimation(show_fab_1);
+
+        Animation animation = new TranslateAnimation(500, 0,0, 0);
+        animation.setDuration(300);
+
+        fram1.startAnimation(animation);
         fram1.setVisibility(View.VISIBLE);
         fram1.setClickable(true);
 
-        //Floating Action Button 2
-        FrameLayout.LayoutParams layoutParams2 = (FrameLayout.LayoutParams) fram2.getLayoutParams();
-        layoutParams2.rightMargin += (int) (fram2.getWidth() * 1.5);
-        layoutParams2.bottomMargin += (int) (fram2.getHeight() * 1.5);
-        fram2.setLayoutParams(layoutParams2);
-        fram2.startAnimation(show_fab_2);
+        fram2.startAnimation(animation);
+        fram2.setVisibility(View.VISIBLE);
         fram2.setClickable(true);
 
-        //Floating Action Button 3
-        FrameLayout.LayoutParams layoutParams3 = (FrameLayout.LayoutParams) fram3.getLayoutParams();
-        layoutParams3.rightMargin += (int) (fram3.getWidth() * 0.25);
-        layoutParams3.bottomMargin += (int) (fram3.getHeight() * 1.7);
-        fram3.setLayoutParams(layoutParams3);
-        fram3.startAnimation(show_fab_3);
-        fram3.setClickable(true);
+
+        fab_buttons_layout.startAnimation(show_layout);
+        fab_buttons_layout.setBackgroundColor(Color.parseColor("#DD000000"));
+        fab_buttons_layout.setOnClickListener(this);
+        fab_buttons_layout.setClickable(true);
+
     }
 
     private void hideFAB() {
 
-        //Floating Action Button 1
-        FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) fram1.getLayoutParams();
-        layoutParams.rightMargin -= (int) (fram1.getWidth() * 1.);
-        layoutParams.bottomMargin -= (int) (fram1.getHeight() * 0.25);
-        fram1.setLayoutParams(layoutParams);
-        fram1.startAnimation(hide_fab_1);
+        Animation animation = new TranslateAnimation(0, 500,0, 0);
+        animation.setDuration(300);
+
+
+        fram1.startAnimation(animation);
+        fram1.setVisibility(View.INVISIBLE);
         fram1.setClickable(false);
 
-        //Floating Action Button 2
-        FrameLayout.LayoutParams layoutParams2 = (FrameLayout.LayoutParams) fram2.getLayoutParams();
-        layoutParams2.rightMargin -= (int) (fram2.getWidth() * 1.5);
-        layoutParams2.bottomMargin -= (int) (fram2.getHeight() * 1.5);
-        fram2.setLayoutParams(layoutParams2);
-        fram2.startAnimation(hide_fab_2);
+        fram2.startAnimation(animation);
+        fram2.setVisibility(View.INVISIBLE);
         fram2.setClickable(false);
 
-        //Floating Action Button 3
-        FrameLayout.LayoutParams layoutParams3 = (FrameLayout.LayoutParams) fram3.getLayoutParams();
-        layoutParams3.rightMargin -= (int) (fram3.getWidth() * 0.25);
-        layoutParams3.bottomMargin -= (int) (fram3.getHeight() * 1.7);
-        fram3.setLayoutParams(layoutParams3);
-        fram3.startAnimation(hide_fab_3);
-        fram3.setClickable(false);
-    }
+        //fab_buttons_layout.startAnimation(hide_layout);
+        fab_buttons_layout.setBackgroundColor(Color.parseColor("#00000000"));
+        fab_buttons_layout.setVisibility(View.INVISIBLE);
+        fab_buttons_layout.setClickable(false);
+        //fab_buttons_layout.setOnClickListener(null);
+
+
+   }
 
     public boolean isFAB_Status() {
         return FAB_Status;
@@ -100,7 +92,10 @@ public class InfoCarFABHandler implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
+
         evaluateClick();
+
+
     }
 
     public void evaluateClick(){

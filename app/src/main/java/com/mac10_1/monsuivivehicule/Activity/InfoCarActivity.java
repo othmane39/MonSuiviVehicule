@@ -7,8 +7,10 @@ import android.support.design.widget.Snackbar;
 
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 
 import com.mac10_1.monsuivivehicule.Fragment.AddMemoFragment;
 import com.mac10_1.monsuivivehicule.Fragment.InfoCarActivityFragment;
@@ -25,7 +27,8 @@ public class InfoCarActivity extends AppCompatActivity implements View.OnClickLi
     InfoCarFABHandler fabHandler;
 
 
-    FrameLayout fab1, fab2, fab3;
+    FrameLayout fab_facture, fab_memo;
+    RelativeLayout fab1_2_container;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,24 +49,54 @@ public class InfoCarActivity extends AppCompatActivity implements View.OnClickLi
 
         //getSupportFragmentManager().fi
         fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab1 = (FrameLayout) findViewById(R.id.fab1_layout);
-        fab2 = (FrameLayout) findViewById(R.id.fab2_layout);
-        fab3 = (FrameLayout) findViewById(R.id.fab3_layout);
+        fab_memo = (FrameLayout) findViewById(R.id.fab_ajouter_memo);
+        fab_facture = (FrameLayout) findViewById(R.id.fab_ajouter_facture);
+        fab1_2_container = (RelativeLayout) findViewById(R.id.fab_1_2_layout_container);
+
+        //fab3 = (FrameLayout) findViewById(R.id.fab3_layout);
 
 
-        fabHandler = new InfoCarFABHandler(getApplication(), fab1, fab2, fab3);
+        fabHandler = new InfoCarFABHandler(getApplication(), fab_memo, fab_facture, fab1_2_container);
 
 
 
-        fab.setOnClickListener(fabHandler);
-        fab1.setOnClickListener(this);
-        fab2.setOnClickListener(this);
+        fab.setOnClickListener(this);
+        fab_memo.setOnClickListener(this);
+        fab_facture.setOnClickListener(this);
     }
 
 
     public void onClick(View view) {
+        if(view == fab ) {
+            if (infoCarActivityFragment != null && infoCarActivityFragment.isVisible())
+                fabHandler.evaluateClick();
+            else if (addMemoFragment != null && addMemoFragment.isVisible()) {
+                addMemoFragment.addMemo();
+                toolbar.setTitle("Info Vehicule");
+                Snackbar.make(view, "Mémo enregistré", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+                fab.setImageResource(android.R.drawable.ic_input_add);
+                getFragmentManager().popBackStack();
+            }
+        }else if(view == fab_memo){
+            fabHandler.evaluateClick();
+            addMemoFragment = new AddMemoFragment();
+            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
 
-        if(addMemoFragment != null && addMemoFragment.isVisible()){
+            fragmentTransaction.replace(R.id.fragment_layout, addMemoFragment); // f1_container is your FrameLayout container
+            fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+            toolbar.setTitle("Ajouter Mémo");
+            fab.setImageResource(R.drawable.ic_done);
+        }else if(view == fab_facture){
+            //TODO
+        }
+
+
+
+/*
+        if(addMemoFragment != null && addMemoFragment.isVisible()){ //DANS LA PAGE ADDMEMO
             fabHandler.evaluateClick();
             addMemoFragment.addMemo();
             toolbar.setTitle("Info Vehicule");
@@ -86,7 +119,7 @@ public class InfoCarActivity extends AppCompatActivity implements View.OnClickLi
             toolbar.setTitle("Ajouter Mémo");
             fab.setImageResource(R.drawable.ic_done);
         }
-
+*/
 
 
 
