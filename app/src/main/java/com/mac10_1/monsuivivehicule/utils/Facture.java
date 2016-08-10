@@ -1,5 +1,7 @@
 package com.mac10_1.monsuivivehicule.utils;
 
+import android.util.Log;
+
 import java.util.Date;
 import java.util.List;
 
@@ -72,10 +74,9 @@ public class Facture {
         this.reparations = reparations;
     }
 
-    void countTotalFacture(){
-        for(Reparation r : reparations){
-            totalFacture += r.getCout();
-        }
+    public void addToTotalFacture(double toAdd){
+        totalFacture += toAdd;
+        Log.d("ADDTOTAL", "New Total" + totalFacture);
     }
 
     @Override

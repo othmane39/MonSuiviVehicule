@@ -107,9 +107,7 @@ public class InfoCarFABHandler implements View.OnClickListener{
 
    }
 
-    public boolean isFAB_Status() {
-        return FAB_Status;
-    }
+
 
     @Override
     public void onClick(View v) {

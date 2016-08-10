@@ -138,7 +138,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
     /**
      * Storing new facture details in database
      */
-    public void addFacture(int id_car , int num_facture, String date , int kilometrage, double total) {
+    public int addFacture(int id_car , int num_facture, String date , int kilometrage, double total) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -154,8 +154,15 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
 
         db.close(); // Closing database connection
+        return (int) id; //TODO a corriger les classes utils id to long!
 
+    }
 
+    public void setTotalFacture(int id_facture, int total){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.execSQL("UPDATE " + TABLE_FACTURE + " SET" + KEY_TOTAL +"='"+ total +"' WHERE" +  KEY_ID_FACTURE+"="+id_facture+"");
+        Log.d(TAG, "Total Facture Modified ");
     }
 
     public void addReparation(int id_facture, String description, double cout) {

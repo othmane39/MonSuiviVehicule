@@ -1,6 +1,6 @@
 package com.mac10_1.monsuivivehicule.utils;
 
-import java.util.Date;
+
 
 /**
  * Created by mac10-1 on 02/08/2016.
@@ -10,15 +10,20 @@ public class Reparation {
     int idRep;
     int idFacture;
     String nom;
-    int cout;
+    double cout;
 
     public Reparation(){
 
     }
 
-    public Reparation(int idRep, int idFacture, String nom, int cout) {
+    public Reparation(int idRep, int idFacture, String nom, double cout) {
         this.idRep = idRep;
         this.idFacture = idFacture;
+        this.nom = nom;
+        this.cout = cout;
+    }
+
+    public Reparation(String nom, double cout) {
         this.nom = nom;
         this.cout = cout;
     }
@@ -32,7 +37,7 @@ public class Reparation {
     public String getNom() {
         return nom;
     }
-    public int getCout() {
+    public double getCout() {
         return cout;
     }
 
@@ -45,7 +50,7 @@ public class Reparation {
     public void setNom(String nom) {
         this.nom = nom;
     }
-    public void setCout(int cout) {
+    public void setCout(double cout) {
         this.cout = cout;
     }
 
