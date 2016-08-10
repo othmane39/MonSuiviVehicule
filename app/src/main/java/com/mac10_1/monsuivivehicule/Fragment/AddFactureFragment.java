@@ -3,6 +3,7 @@ package com.mac10_1.monsuivivehicule.Fragment;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,6 +45,7 @@ public class AddFactureFragment extends Fragment implements View.OnClickListener
     private RelativeLayout reparation_edit;
     private ReparationEdit no_factureWatcher, reparation_txtWatcher, reparation_coutWatcher, dateWatcher, kilometrageWatcher;
     private FrameLayout save_facture_button;
+    private RelativeLayout to_goBack;
 
     private int idFacture = -1;
 
@@ -64,6 +66,7 @@ public class AddFactureFragment extends Fragment implements View.OnClickListener
         reparation_txt  = (EditText) rootView.findViewById(R.id.reparation_txt_edit);
         reparation_cout  = (EditText) rootView.findViewById(R.id.reparation_cout_edit);
         //save_facture_button = (FrameLayout) rootView.findViewById(R.id.save_facture_button);
+        to_goBack = (RelativeLayout) rootView.findViewById(R.id.rl_go_back);
 
         no_factureWatcher = new ReparationEdit(no_facture);
         dateWatcher = new ReparationEdit(date);
@@ -76,6 +79,8 @@ public class AddFactureFragment extends Fragment implements View.OnClickListener
         kilometrage.addTextChangedListener(kilometrageWatcher);
         reparation_txt.addTextChangedListener(reparation_txtWatcher);
         reparation_cout.addTextChangedListener(reparation_coutWatcher);
+
+        to_goBack.setOnClickListener(this);
 
 
 
@@ -137,7 +142,8 @@ public class AddFactureFragment extends Fragment implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.add_reparation_button:
-                Log.d("LALALA", "LAALALA");
+                //TODO Focus on Designation edit item
+                reparation_txt.requestFocus();
                 if (animHandler.isFirstAdd() ) {
                     animHandler.evaluateClick();
 
@@ -148,6 +154,14 @@ public class AddFactureFragment extends Fragment implements View.OnClickListener
                     reparation_txt.setText("");
                     reparation_cout.setText("");
                 }
+                break;
+            case R.id.rl_go_back:
+                Log.d("TEST", "TETS");
+                getFragmentManager().popBackStack();
+                FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+                getActivity().setTitle("Info Vehicule");
+                fab.setImageResource(android.R.drawable.ic_input_add);
+                getFragmentManager().popBackStack();
                 break;
             /*
             case R.id.save_facture_button:

@@ -1,5 +1,7 @@
 package com.mac10_1.monsuivivehicule.utils;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import java.util.Date;
@@ -8,7 +10,7 @@ import java.util.List;
 /**
  * Created by mac10-1 on 02/08/2016.
  */
-public class Facture {
+public class Facture implements Parcelable{
 
     private int idFact;
     private int idCar;
@@ -17,6 +19,10 @@ public class Facture {
     private int kilometrage;
     private double totalFacture;
     private List<Reparation> reparations;
+
+    public Facture(Parcel in){
+        readFromParcel(in);
+    }
 
     public Facture(){
         totalFacture = 0;
@@ -91,4 +97,43 @@ public class Facture {
                 ", reparations=" + reparations +
                 '}';
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(idFact);
+        dest.writeInt(idCar);
+        dest.writeInt(numFacture);
+        dest.writeString(date);
+        dest.writeInt(kilometrage);
+        dest.writeDouble(totalFacture);
+        dest.writeTypedList(reparations);
+
+    }
+
+    public void readFromParcel(Parcel in){
+        idFact = in.readInt();
+        idCar = in.readInt();
+        numFacture = in.readInt();
+        date = in.readString();
+        kilometrage = in.readInt();
+        totalFacture = in.readDouble();
+        in.readTypedList(reparations, Reparation.CREATOR);
+
+    }
+
+    public static final Parcelable.Creator CREATOR =
+            new Parcelable.Creator() {
+                public Facture createFromParcel(Parcel in) {
+                    return new Facture(in);
+                }
+
+                public Facture[] newArray(int size) {
+                    return new Facture[size];
+                }
+            };
 }

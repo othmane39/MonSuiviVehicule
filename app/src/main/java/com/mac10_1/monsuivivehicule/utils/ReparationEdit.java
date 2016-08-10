@@ -75,6 +75,7 @@ public class ReparationEdit implements TextWatcher{
     private boolean notEmptyEdit() {
         if (v.getText().toString().trim().isEmpty()) {
             v.setError("Champ requis!");
+            v.requestFocus();
             return false;
         } else return true;
 

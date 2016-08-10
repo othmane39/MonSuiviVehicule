@@ -4,10 +4,12 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.mac10_1.monsuivivehicule.R;
+import com.mac10_1.monsuivivehicule.utils.Car;
 import com.mac10_1.monsuivivehicule.utils.Facture;
 import com.mac10_1.monsuivivehicule.utils.MemoCar;
 
@@ -19,8 +21,13 @@ import java.util.StringTokenizer;
  */
 public class FactureCarAdapter extends ArrayAdapter<Facture> {
 
+    Context context;
+    List<Facture> factures;
+
     public FactureCarAdapter(Context context, List<Facture> objects) {
         super(context, 0, objects);
+        this.context = context;
+        this.factures = objects;
     }
 
     @Override
@@ -49,6 +56,8 @@ public class FactureCarAdapter extends ArrayAdapter<Facture> {
 
         return convertView;
     }
+
+
 
     private class MemoCarViewHolder{
         public TextView no;

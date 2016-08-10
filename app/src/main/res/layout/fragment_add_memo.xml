@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".Activity.InfoCarActivity"
     android:background="#DD000000"
+    android:id="@+id/rl_go_back"
     >
 
     <ScrollView
@@ -71,7 +72,8 @@
                             android:layout_height="wrap_content"
                             android:textColorHint="#333333"
                             android:background="#00000000"
-                            android:maxLines="1" />
+                            android:nextFocusDown="@+id/memo_value"
+                            android:singleLine="true" />
 
                         <View
                             android:layout_width="match_parent"
@@ -135,6 +137,7 @@
                             android:layout_height="wrap_content"
                             android:textColorHint="#333333"
                             android:background="#00000000"
+                            android:nextFocusDown="@+id/memo_unit"
                             android:maxLines="1"
                             android:inputType="number"
                             />
@@ -205,6 +208,7 @@
                             android:layout_height="wrap_content"
                             android:textColorHint="#333333"
                             android:background="#00000000"
+                            android:imeOptions="actionDone"
                             android:inputType="text"
                             android:maxLength="3" />
 

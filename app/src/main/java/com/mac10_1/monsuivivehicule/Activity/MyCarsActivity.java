@@ -35,9 +35,11 @@ public class MyCarsActivity extends AppCompatActivity {
 
 
         //listViewCar = (ListView) findViewById(R.id.list_view_cars);
-/*
+
         SQLiteHandler db = new SQLiteHandler(getApplicationContext());
-        db.addCar("EB-643-YV","VW", "GOLF IV", 2004, "HJGSDHJGFHJSDGJFHGSJHFG");
+        /*
+        db.addCar("EB-643-YV","VW", "GOLF IV", 2003, "WVWZZZ1JZ3B088893");
+
         db.addCar("32-3-4","Audi", "A3", 2004, "331232414324HFG");
         db.addMemo(1, "Vidange", 275349, "km");
         db.addMemo(1, "Filtre a air", 290349, "km");

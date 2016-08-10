@@ -3,8 +3,11 @@ package com.mac10_1.monsuivivehicule.Fragment;
 
 import android.annotation.SuppressLint;
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
+
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -33,7 +36,7 @@ import java.util.List;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class InfoCarActivityFragment extends Fragment {
+public class InfoCarActivityFragment extends Fragment implements AdapterView.OnItemClickListener {
 
     private ListView memoListView;
     private ListView factureListView;
@@ -47,6 +50,9 @@ public class InfoCarActivityFragment extends Fragment {
     private List<Facture> facturesList;
     private MemoCarAdapter memoCarAdapter;
     private FactureCarAdapter factureCarAdapter;
+    private ShowFactureFragment factureFragment;
+    private ViewGroup container;
+    private FloatingActionButton fab;
 
 
     @Override
@@ -55,7 +61,7 @@ public class InfoCarActivityFragment extends Fragment {
 
 
         View rootView =  inflater.inflate(R.layout.fragment_info_car, container, false);
-
+        this.container = container;
         Bundle b = getActivity().getIntent().getExtras();
         car = b.getParcelable("Car");
         marque = (TextView) rootView.findViewById(R.id.marque);
@@ -81,6 +87,7 @@ public class InfoCarActivityFragment extends Fragment {
 
         factureCarAdapter = new FactureCarAdapter(getContext(), facturesList);
         factureListView.setAdapter(factureCarAdapter);
+        factureListView.setOnItemClickListener(this);
 
         justifyListViewHeightBasedOnChildren(memoListView);
         justifyListViewHeightBasedOnChildren(factureListView);
@@ -125,6 +132,22 @@ public class InfoCarActivityFragment extends Fragment {
         return true;
     }
 
+    public void refreshMemo(){
+        memoCarList = db.getMemoCarList(car.getId_car());
+        memoCarAdapter.clear();
+        memoCarAdapter.addAll(memoCarList);
+        memoCarAdapter.notifyDataSetChanged();
+        justifyListViewHeightBasedOnChildren(memoListView);
+    }
+
+    public void refreshFactures(){
+        facturesList = db.getFacturesList(car.getId_car());
+        factureCarAdapter.clear();
+        factureCarAdapter.addAll(facturesList);
+        factureCarAdapter.notifyDataSetChanged();
+        justifyListViewHeightBasedOnChildren(factureListView);
+    }
+
     public void justifyListViewHeightBasedOnChildren (ListView listView) {
 
         ListAdapter adapter = listView.getAdapter();
@@ -150,4 +173,26 @@ public class InfoCarActivityFragment extends Fragment {
         listView.requestLayout();
     }
 
+    public ShowFactureFragment getFactureFragment() {
+        return factureFragment;
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Facture facture = facturesList.get(position);
+        facture.setReparations(db.getReparationsList(facture.getIdFact()));
+        Bundle args = new Bundle();
+        args.putParcelable("Facture", facture);
+        getActivity().getIntent().putExtras(args);
+        factureFragment = new ShowFactureFragment();
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.replace(R.id.fragment_layout, factureFragment);
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        ft.addToBackStack(null);
+        ft.commit();
+        fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+        fab.hide();
+
+
+    }
 }
