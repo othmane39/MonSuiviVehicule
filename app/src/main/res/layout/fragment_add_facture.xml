@@ -9,65 +9,71 @@
 
         <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="30dp">
-            <TextView
-                android:id="@+id/text1"
+                android:layout_height="50dp">
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/no_facture_layout_edit"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="N˚ Facture"
-                android:textSize="20sp"/>
+                android:layout_height="50dp"
+                >
             <EditText
                 android:id="@+id/no_facture"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/text1"
+                android:layout_width="200dp"
+                android:layout_height="match_parent"
+                android:textSize="25sp"
                 android:textColorHint="#333333"
                 android:background="#00000000"
                 android:maxLines="1"
+                android:hint="N˚ Facture"
                 android:layout_alignParentEnd="true"
                 android:inputType="number"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/date_layout_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_toRightOf="@id/no_facture_layout_edit"
+                android:layout_alignParentEnd="true"
+                >
+                <EditText
+                    android:id="@+id/date_facture"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textSize="25sp"
+                    android:hint="Date"
+                    android:textColorHint="#333333"
+                    android:background="#00000000"
+                    android:maxLines="1"
+                    android:layout_alignParentEnd="true"
+                    android:inputType="date"/>
+            </android.support.design.widget.TextInputLayout>
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="30dp">
-            <TextView
-                android:id="@+id/text2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Date"
-                android:textSize="20sp"/>
-            <EditText
-                android:id="@+id/date_facture"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/text2"
-                android:textColorHint="#333333"
-                android:background="#00000000"
-                android:maxLines="1"
-                android:layout_alignParentEnd="true"
-                android:inputType="date"/>
-        </RelativeLayout>
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="30dp">
-            <TextView
-                android:id="@+id/text3"
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/kilometrage_layout_edit"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Kilometrage"
-                android:textSize="20sp"/>
-            <EditText
-                android:id="@+id/kilometrage_facture"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/text3"
-                android:textColorHint="#333333"
-                android:background="#00000000"
-                android:maxLines="1"
-                android:layout_alignParentEnd="true"
-                android:inputType="number"/>
+                android:layout_height="40dp"
+                >
+
+                <EditText
+                    android:id="@+id/kilometrage_facture"
+                    android:layout_width="200dp"
+                    android:layout_height="match_parent"
+                    android:layout_toRightOf="@+id/text3"
+                    android:hint="Kilometrage"
+                    android:textSize="20sp"
+                    android:textColorHint="#333333"
+                    android:background="#00000000"
+                    android:maxLines="1"
+                    android:layout_alignParentEnd="true"
+                    android:inputType="number"/>
+            </android.support.design.widget.TextInputLayout>
         </RelativeLayout>
 
 

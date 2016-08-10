@@ -121,7 +121,7 @@ public class InfoCarActivity extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void onBackPressed() {
-        //super.onBackPressed();
+        
         if(addMemoFragment != null && addMemoFragment.isVisible()){
 
             toolbar.setTitle("Info Vehicule");
@@ -133,8 +133,11 @@ public class InfoCarActivity extends AppCompatActivity implements View.OnClickLi
         else if(addFactureFragment != null && addFactureFragment.isVisible()){
             toolbar.setTitle("Info Vehicule");
             getFragmentManager().popBackStack();
-            fab.show();
+
         }
-        else super.onBackPressed();
+        else if(infoCarActivityFragment != null && infoCarActivityFragment.isVisible()) {
+            toolbar.setTitle("Mes Voitures");
+            finish();
+        }
     }
 }
