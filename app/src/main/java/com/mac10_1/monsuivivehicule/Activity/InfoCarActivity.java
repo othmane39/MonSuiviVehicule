@@ -77,19 +77,22 @@ public class InfoCarActivity extends AppCompatActivity implements View.OnClickLi
         if(view == fab ) {
 
             if (addMemoFragment != null && addMemoFragment.isVisible()) {
-                addMemoFragment.addMemo();
-                toolbar.setTitle("Info Vehicule");
-                Snackbar.make(view, "Mémo enregistré", Snackbar.LENGTH_LONG)
+                if(addMemoFragment.saveMemo()) {
+
+                    toolbar.setTitle("Info Vehicule");
+                    Snackbar.make(view, "Mémo enregistré", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                    fab.setImageResource(android.R.drawable.ic_input_add);
+                    getFragmentManager().popBackStack();
+                    infoCarActivityFragment.refreshMemo();
+                    //Hide Keyboard
+                    View v = this.getCurrentFocus();
+                    if (v != null) {
+                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                    }
+                }else Snackbar.make(view, "Erreur sur l'enregistrement", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-                fab.setImageResource(android.R.drawable.ic_input_add);
-                getFragmentManager().popBackStack();
-                infoCarActivityFragment.refreshMemo();
-                //Hide Keyboard
-                View v = this.getCurrentFocus();
-                if (v != null) {
-                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-                }
             }
             else if (addFactureFragment != null && addFactureFragment.isVisible()){
                 if(addFactureFragment.saveFacture()) {
@@ -100,10 +103,12 @@ public class InfoCarActivity extends AppCompatActivity implements View.OnClickLi
                     infoCarActivityFragment.refreshFactures();
                     //Hide Keyboard
                     View v = this.getCurrentFocus();
+
                     if (v != null) {
                         InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                         imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
                     }
+
                 }
             } else if (infoCarActivityFragment != null && infoCarActivityFragment.isVisible())
                 fabHandler.evaluateClick();

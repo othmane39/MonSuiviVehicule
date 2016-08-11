@@ -2,6 +2,7 @@ package com.mac10_1.monsuivivehicule.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,7 +54,17 @@ public class CarAdapter extends ArrayAdapter<Car> implements AdapterView.OnItemC
         viewHolder.modele.setText(car.getModele());
         viewHolder.immatriculation.setText(car.getImmatriculation());
         viewHolder.chassis.setText(car.getNchassis());
-        //viewHolder.logo.setImageDrawable(new ColorDrawable(car.getLogo()));
+
+
+        String urilogo = "@drawable/"+ car.getMarque().toLowerCase();
+        int imageResource = getContext().getResources().getIdentifier(urilogo, null, getContext().getPackageName());
+        if(imageResource != 0x0) {
+            Drawable res = getContext().getResources().getDrawable(imageResource);
+            viewHolder.logo.setImageDrawable(res);
+        }else {
+            viewHolder.modele.setText(car.getMarque() +" "+ car.getModele());
+            viewHolder.logo.setImageResource(R.drawable.nologo);
+        }
 
         return convertView;
     }

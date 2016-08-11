@@ -5,9 +5,11 @@ import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ListAdapter;
@@ -30,7 +32,7 @@ import java.util.List;
 /**
  * Created by mac10-1 on 09/08/2016.
  */
-public class AddFactureFragment extends Fragment implements View.OnClickListener{
+public class AddFactureFragment extends Fragment implements View.OnClickListener, View.OnKeyListener{
     private SQLiteHandler db;
     private Car car;
     private Facture facture;
@@ -79,6 +81,8 @@ public class AddFactureFragment extends Fragment implements View.OnClickListener
         kilometrage.addTextChangedListener(kilometrageWatcher);
         reparation_txt.addTextChangedListener(reparation_txtWatcher);
         reparation_cout.addTextChangedListener(reparation_coutWatcher);
+
+        reparation_cout.setOnKeyListener(this);
 
         to_goBack.setOnClickListener(this);
 
@@ -142,7 +146,7 @@ public class AddFactureFragment extends Fragment implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.add_reparation_button:
-                //TODO Focus on Designation edit item
+
                 reparation_txt.requestFocus();
                 if (animHandler.isFirstAdd() ) {
                     animHandler.evaluateClick();
@@ -163,11 +167,7 @@ public class AddFactureFragment extends Fragment implements View.OnClickListener
                 fab.setImageResource(android.R.drawable.ic_input_add);
                 getFragmentManager().popBackStack();
                 break;
-            /*
-            case R.id.save_facture_button:
-                saveFacture();
-                break;
-               */
+
 
         }
     }
@@ -196,5 +196,21 @@ public class AddFactureFragment extends Fragment implements View.OnClickListener
         Log.d("Missa", "NotFrag " + par.height);
         listView.setLayoutParams(par);
         listView.requestLayout();
+    }
+
+    @Override
+    public boolean onKey(View v, int keyCode, KeyEvent event) {
+        if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER) && reparation_txtWatcher.isValidate_view() && reparation_coutWatcher.isValidate_view()) {
+            addReparation();
+            //animHandler.evaluateClick();
+            reparation_txt.setText("");
+            reparation_cout.setText("");
+            reparation_txt.requestFocus();
+
+
+
+            return true;
+        }
+        return false;
     }
 }

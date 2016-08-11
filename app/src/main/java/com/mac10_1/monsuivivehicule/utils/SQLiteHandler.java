@@ -461,5 +461,19 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
     }
 
+    public boolean removeFactureById(int id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        int r = db.delete(TABLE_FACTURE, KEY_ID_FACTURE + "=" + id, null);
+        db.close();
+        return r>0;
+    }
+
+    public boolean removeCarById(int id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        int r = db.delete(TABLE_CAR, KEY_ID_CAR + "=" + id, null);
+        db.close();
+        return r>0;
+    }
+
 
 }

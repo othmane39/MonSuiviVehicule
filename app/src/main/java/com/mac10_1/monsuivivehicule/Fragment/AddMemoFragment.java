@@ -9,12 +9,14 @@ import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.mac10_1.monsuivivehicule.R;
 import com.mac10_1.monsuivivehicule.utils.Car;
+import com.mac10_1.monsuivivehicule.utils.ReparationEdit;
 import com.mac10_1.monsuivivehicule.utils.SQLiteHandler;
 
 import org.w3c.dom.Text;
@@ -26,11 +28,13 @@ public class AddMemoFragment extends Fragment implements View.OnClickListener {
 
 
     private SQLiteHandler db;
-    private TextView name;
-    private TextView unit;
-    private TextView value;
+    private EditText name;
+    private EditText unit;
+    private EditText value;
     private Car car;
     private RelativeLayout rl_goback;
+
+    private ReparationEdit nameWatcher, valueWatcher, unitWatcher;
 
 
     @Override
@@ -39,10 +43,15 @@ public class AddMemoFragment extends Fragment implements View.OnClickListener {
 
         Bundle b = getActivity().getIntent().getExtras();
         car = b.getParcelable("Car");
-        name = (TextView) rootView.findViewById(R.id.memo_name);
-        value = (TextView) rootView.findViewById(R.id.memo_value);
-        unit = (TextView) rootView.findViewById(R.id.memo_unit);
+        name = (EditText) rootView.findViewById(R.id.memo_name);
+        value = (EditText) rootView.findViewById(R.id.memo_value);
+        unit = (EditText) rootView.findViewById(R.id.memo_unit);
         rl_goback = (RelativeLayout) rootView.findViewById(R.id.rl_go_back);
+
+        nameWatcher = new ReparationEdit(name);
+        valueWatcher = new ReparationEdit(value);
+        name.addTextChangedListener(nameWatcher);
+        value.addTextChangedListener(valueWatcher);
 
         rl_goback.setOnClickListener(this);
         db = new SQLiteHandler(getContext());
@@ -51,9 +60,12 @@ public class AddMemoFragment extends Fragment implements View.OnClickListener {
         return rootView;
     }
 
-    public void addMemo() {
+    public boolean saveMemo() {
 
-        db.addMemo(car.getId_car(), name.getText().toString(), Integer.parseInt(value.getText().toString()), unit.getText().toString());
+        if(nameWatcher.isValidate_view() && valueWatcher.isValidate_view()) {
+            db.addMemo(car.getId_car(), name.getText().toString(), Integer.parseInt(value.getText().toString()), unit.getText().toString());
+            return true;
+        }else return false;
 
     }
 

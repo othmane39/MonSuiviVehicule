@@ -84,6 +84,8 @@ public class AddCarFragment extends Fragment implements View.OnClickListener{
         getFragmentManager().popBackStack();
     }
 
+
+
     public boolean isSpinnerVisible(){
         return constructeurSpinner.isAccessibilityFocused();
     }

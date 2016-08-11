@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import android.support.design.widget.FloatingActionButton;
@@ -54,6 +55,8 @@ public class InfoCarActivityFragment extends Fragment implements AdapterView.OnI
     private ViewGroup container;
     private FloatingActionButton fab;
 
+    private View viewForContextMenu;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -67,6 +70,7 @@ public class InfoCarActivityFragment extends Fragment implements AdapterView.OnI
         marque = (TextView) rootView.findViewById(R.id.marque);
         modele = (TextView) rootView.findViewById(R.id.modele);
         nchassis = (TextView) rootView.findViewById(R.id.n_chassis);
+        logo = (ImageView) rootView.findViewById(R.id.logo);
 
         memoListView = (ListView) rootView.findViewById(R.id.memo_list);
         factureListView = (ListView) rootView.findViewById(R.id.factures_list);
@@ -89,6 +93,17 @@ public class InfoCarActivityFragment extends Fragment implements AdapterView.OnI
         factureListView.setAdapter(factureCarAdapter);
         factureListView.setOnItemClickListener(this);
 
+        registerForContextMenu(factureListView);
+
+        String urilogo = "@drawable/"+ car.getMarque().toLowerCase();
+        int imageResource = getContext().getResources().getIdentifier(urilogo, null, getContext().getPackageName());
+        if(imageResource != 0x0) {
+            Drawable res = getContext().getResources().getDrawable(imageResource);
+            logo.setImageDrawable(res);
+        }else {
+            logo.setImageResource(R.drawable.nologo);
+        }
+
         justifyListViewHeightBasedOnChildren(memoListView);
         justifyListViewHeightBasedOnChildren(factureListView);
 
@@ -99,34 +114,43 @@ public class InfoCarActivityFragment extends Fragment implements AdapterView.OnI
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        if (v.getId()==R.id.memo_list) {
+
             AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
             //menu.setHeaderTitle("Vidange");
-            String[] menuItems = {"modifier", "supprimer"};
+            String[] menuItems = new String[1];
+            if (v.getId()==R.id.memo_list) {
+                menuItems[0] = "Supprimer memo";
+                viewForContextMenu = memoListView;
+            }
+            else if(v.getId()==R.id.factures_list) {
+                menuItems[0] = "Supprimer facture";
+                viewForContextMenu = factureListView;
+            }
+
             for (int i = 0; i<menuItems.length; i++) {
                 menu.add(Menu.NONE, i, i, menuItems[i]);
             }
             Log.e("TAG", "onCreate");
         }
-    }
+
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
         int menuItemIndex = item.getItemId();
-        if(menuItemIndex == 0){ //modifier
 
-        }else if(menuItemIndex == 1){ //supprimer
-            if(db.removeMemoById(memoCarList.get(info.position).getIdMemo())) {
-                Log.d("DB", "memo removed successfully");
-                memoCarList = db.getMemoCarList(car.getId_car());
-                memoCarAdapter.clear();
-                memoCarAdapter.addAll(memoCarList);
-                memoCarAdapter.notifyDataSetChanged();
-                justifyListViewHeightBasedOnChildren(memoListView);
+        if(menuItemIndex == 0){
+            if(viewForContextMenu == memoListView) {
+                if (db.removeMemoById(memoCarList.get(info.position).getIdMemo())) {
+                    Log.d("DB", "memo removed successfully");
+                    refreshMemo();
+                }
+            } else if(viewForContextMenu == factureListView){
+                if (db.removeFactureById(facturesList.get(info.position).getIdFact())){
+                    Log.d("DB", "facture removed successfully");
+                    refreshFactures();
+                }
             }
-
-
         }
 
         return true;
@@ -195,4 +219,7 @@ public class InfoCarActivityFragment extends Fragment implements AdapterView.OnI
 
 
     }
+
+
+
 }
