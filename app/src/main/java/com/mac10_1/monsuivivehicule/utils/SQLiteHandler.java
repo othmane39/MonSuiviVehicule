@@ -21,9 +21,11 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
     private static final String TAG = SQLiteHandler.class.getSimpleName();
 
-    private static final int DATABASE_VERSION = 9;
+    private static final int DATABASE_VERSION = 17;
 
     private static final String DATABASE_NAME = "suiviVehicules";
+
+    private static final String TABE_CONSTRUCTEUR = "constructeur";
 
     private static final String TABLE_CAR = "car";
 
@@ -34,6 +36,9 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
     private static final String TABLE_MEMO_CAR = "memo_car";
 
+
+    //private static final String KEY_ID_CONSTRUCTEUR = "id_constr";
+    private static final String KEY_NOM_CONSTRUCTEUR = "nom_constr";
 
     //memo_car table collumn name
     private static final String KEY_ID_MEMO = "id_memo";
@@ -46,7 +51,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
     //car table collumn name
     private static final String KEY_ID_CAR = "id_car";
     private static final String KEY_IMMATRICULATION = "immatriculation";
-    private static final String KEY_MARQUE = "marque";
+    private static final String KEY_ID_CONSTRUCTEUR = "marque";
     private static final String KEY_MODELE = "modele";
     private static final String KEY_MILLESIME = "millesime";
     private static final String KEY_CHASSIS = "n_chassis";
@@ -67,17 +72,25 @@ public class SQLiteHandler extends SQLiteOpenHelper {
     private static final String KEY_COUT = "cout";
 
 
+    private Context context;
     public SQLiteHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        this.context = context;
     }
 
     // Creating Tables
     @Override
     public void onCreate(SQLiteDatabase db) {
+
+        String CREATE_CONSTRUCTEUR_TABLE = "CREATE TABLE " + TABE_CONSTRUCTEUR + "(" + KEY_ID_CONSTRUCTEUR + " INTEGER PRIMARY KEY," + KEY_NOM_CONSTRUCTEUR
+                + " VARCHAR(255) NOT NULL)";
+        db.execSQL(CREATE_CONSTRUCTEUR_TABLE);
+
         String CREATE_CAR_TABLE = "CREATE TABLE " + TABLE_CAR + "("
                 + KEY_ID_CAR + " INTEGER PRIMARY KEY, " + KEY_IMMATRICULATION + " VARCHAR(255), "
-                + KEY_MARQUE + " VARCHAR(255) NOT NULL, " + KEY_MODELE + " VARCHAR(255) NOT NULL, "
-                + KEY_MILLESIME + " INTEGER, " + KEY_CHASSIS + " VARCHAR(255)" +")";// + " DEFAULT CHARSET=utf8";
+                + KEY_ID_CONSTRUCTEUR + " INTEGER NOT NULL, " + KEY_MODELE + " VARCHAR(255) NOT NULL, "
+                + KEY_MILLESIME + " INTEGER, " + KEY_CHASSIS + " VARCHAR(255), FOREIGN KEY (" + KEY_ID_CONSTRUCTEUR
+                +") REFERENCES " + TABE_CONSTRUCTEUR + "("+ KEY_ID_CONSTRUCTEUR+"))";// + " DEFAULT CHARSET=utf8";
         db.execSQL(CREATE_CAR_TABLE);
 
         String CREATE_FACTURE_TABLE = "CREATE TABLE " + TABLE_FACTURE + "(" + KEY_ID_FACTURE + " INTEGER PRIMARY KEY, "
@@ -96,15 +109,19 @@ public class SQLiteHandler extends SQLiteOpenHelper {
                 + " VARCHAR(10)," + " FOREIGN KEY (" + KEY_ID_CAR + ") REFERENCES " + TABLE_CAR + "(" + KEY_ID_CAR + "))";
         db.execSQL(CREATE_MEMO_TABLE);
 
+
+
         Log.d(TAG, "Database tables created");
 
 
     }
 
+
     // Upgrading database
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older table if existed
+        db.execSQL("DROP TABLE IF EXISTS " + TABE_CONSTRUCTEUR);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_CAR);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_FACTURE);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_REPARATION);
@@ -118,12 +135,12 @@ public class SQLiteHandler extends SQLiteOpenHelper {
     /**
      * Storing new car details in database
      */
-    public void addCar(String immatriculation, String marque, String modele, int millesime, String nchasssis) {
+    public void addCar(String immatriculation, int id_constructeur, String modele, int millesime, String nchasssis) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(KEY_IMMATRICULATION, immatriculation);
-        values.put(KEY_MARQUE, marque);
+        values.put(KEY_ID_CONSTRUCTEUR, id_constructeur);
         values.put(KEY_MODELE, modele);
         values.put(KEY_MILLESIME, millesime);
         values.put(KEY_CHASSIS, nchasssis);
@@ -203,11 +220,44 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
     }
 
+    public void addAllConstructeursBrands(String[] constructeurs){
+        ContentValues values;
+        SQLiteDatabase db = this.getWritableDatabase();
 
+        for(int i=0; i<constructeurs.length; i++){
+            values = new ContentValues();
+            values.put(KEY_NOM_CONSTRUCTEUR, constructeurs[i]);
+
+            long id = db.insert(TABE_CONSTRUCTEUR, null, values);
+            Log.d(TAG, "New constructeur inserted into sqlite: " + id + "   " + constructeurs[i]);
+
+        }
+
+
+    }
+
+
+    public String getConstructeurNameFromID(int id_constr){
+        String selectQuery = "SELECT "+ KEY_NOM_CONSTRUCTEUR +" FROM " + TABE_CONSTRUCTEUR + " WHERE " + KEY_ID_CONSTRUCTEUR + "=?";
+        String[] params = new String[]{ String.valueOf(id_constr) };
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, params);
+        cursor.moveToFirst();
+        if(cursor.getCount()>0){
+            return  cursor.getString(0);
+        }else {
+            new NullPointerException();
+            return null;
+        }
+
+    }
     public Car getCarFromId(int id_car){
         Car car = new Car();
 
-        String selectQuery = "SELECT * FROM " + TABLE_CAR + " WHERE " + KEY_ID_CAR + "=?";
+        //String selectQuery = "SELECT * FROM " + TABLE_CAR + " WHERE " + KEY_ID_CAR + "=?";
+        String selectQuery = "SELECT * FROM " + TABLE_CAR + " a INNER JOIN "+ TABE_CONSTRUCTEUR + " b ON a."+KEY_ID_CONSTRUCTEUR+"=b."+KEY_ID_CONSTRUCTEUR
+                +" WHERE a."+KEY_ID_CAR+ "=?";
+
         String[] params = new String[]{ String.valueOf(id_car) };
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, params);
@@ -217,7 +267,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
             car.setId_car((int) cursor.getInt(0));
             car.setImmatriculation((String) cursor.getString(1));
-            car.setMarque((String) cursor.getString(2));
+            car.setMarque((String) cursor.getString(7)); //TODO a tester!!
             car.setModele((String) cursor.getString(3));
             car.setMillesime((int) cursor.getInt(4));
             car.setNchassis((String) cursor.getString(5));
@@ -225,7 +275,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
             car.setMemoCar(getMemoCarList(id_car));
             car.setFactures(getFacturesList(id_car));
 
-            //TODO a tester!!
+
 
         }
         cursor.close();
@@ -279,12 +329,11 @@ public class SQLiteHandler extends SQLiteOpenHelper {
                 Car car = new Car();
                 car.setId_car((int) cursor.getInt(0));
                 car.setImmatriculation((String) cursor.getString(1));
-                car.setMarque((String) cursor.getString(2));
+                car.setMarque((String) getConstructeurNameFromID(cursor.getInt(2)));
                 car.setModele((String) cursor.getString(3));
                 car.setMillesime((int) cursor.getInt(4));
                 car.setNchassis((String) cursor.getString(5));
 
-                //TODO: peut etre charger les 2 autres listes Factures and memo?
 
                 carList.add(car);
 
