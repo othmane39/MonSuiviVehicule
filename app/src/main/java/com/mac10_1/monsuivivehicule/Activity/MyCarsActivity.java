@@ -3,13 +3,16 @@ package com.mac10_1.monsuivivehicule.Activity;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 
+import com.mac10_1.monsuivivehicule.Fragment.AddCarFragment;
 import com.mac10_1.monsuivivehicule.Fragment.InfoCarActivityFragment;
 import com.mac10_1.monsuivivehicule.Fragment.MyCarsFragment;
 import com.mac10_1.monsuivivehicule.R;
@@ -22,9 +25,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-public class MyCarsActivity extends AppCompatActivity {
+public class MyCarsActivity extends AppCompatActivity implements View.OnClickListener{
 
+    MyCarsFragment myCarsFragment;
+    AddCarFragment addCarFragment;
 
+    FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +43,8 @@ public class MyCarsActivity extends AppCompatActivity {
         //listViewCar = (ListView) findViewById(R.id.list_view_cars);
 
         SQLiteHandler db = new SQLiteHandler(getApplicationContext());
-        /*
-        db.addCar("EB-643-YV","VW", "GOLF IV", 2003, "WVWZZZ1JZ3B088893");
+/*
+        db.addCar("EB-643-YV",1078, "GOLF IV", 2003, "WVWZZZ1JZ3B088893");
 
         db.addCar("32-3-4","Audi", "A3", 2004, "331232414324HFG");
         db.addMemo(1, "Vidange", 275349, "km");
@@ -64,7 +70,7 @@ public class MyCarsActivity extends AppCompatActivity {
 */
 
 
-        MyCarsFragment myCarsFragment = new MyCarsFragment();
+        myCarsFragment = new MyCarsFragment();
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
 
         fragmentTransaction.replace(R.id.fragment_mycar_layout, myCarsFragment); // f1_container is your FrameLayout container
@@ -74,21 +80,40 @@ public class MyCarsActivity extends AppCompatActivity {
 
 
 
-        FloatingActionButton newCarButton = (FloatingActionButton) findViewById(R.id.fab);
-        newCarButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                //        .setAction("Action", null).show();
-                //TODO jump to AddNewCarActivity;
-            }
-        });
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(this);
     }
 
 
 
 
+    @Override
+    public void onClick(View view) {
+        //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+        //        .setAction("Action", null).show();
 
+        if(addCarFragment != null && addCarFragment.isVisible()){
+            if(addCarFragment.saveCar()) {
+                Snackbar.make(view, "Votre véhicule a bien été enregistré", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+                getFragmentManager().popBackStack();
+                fab.setImageResource(android.R.drawable.ic_input_add);
+
+            }
+            else Snackbar.make(view, "Erreur lors de l'enregistrement", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+        }
+        else if(myCarsFragment != null && myCarsFragment.isVisible()) {
+
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            addCarFragment = new AddCarFragment();
+            ft.replace(R.id.fragment_mycar_layout, addCarFragment);
+            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+            ft.addToBackStack(null);
+            ft.commit();
+            fab.setImageResource(R.drawable.ic_save_white);
+        }
+    }
 
 
 
@@ -119,5 +144,22 @@ public class MyCarsActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        if(addCarFragment != null && addCarFragment.isVisible()){
+
+
+            fab.setImageResource(android.R.drawable.ic_input_add);
+            getFragmentManager().popBackStack();
+
+
+        }
+        else if(myCarsFragment != null && myCarsFragment.isVisible()){
+            finish();
+        }
+
     }
 }

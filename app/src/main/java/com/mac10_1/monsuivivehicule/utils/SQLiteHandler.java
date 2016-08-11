@@ -21,11 +21,11 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
     private static final String TAG = SQLiteHandler.class.getSimpleName();
 
-    private static final int DATABASE_VERSION = 17;
+    private static final int DATABASE_VERSION = 23;
 
     private static final String DATABASE_NAME = "suiviVehicules";
 
-    private static final String TABE_CONSTRUCTEUR = "constructeur";
+    private static final String TABLE_CONSTRUCTEUR = "constructeur";
 
     private static final String TABLE_CAR = "car";
 
@@ -51,7 +51,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
     //car table collumn name
     private static final String KEY_ID_CAR = "id_car";
     private static final String KEY_IMMATRICULATION = "immatriculation";
-    private static final String KEY_ID_CONSTRUCTEUR = "marque";
+    private static final String KEY_ID_CONSTRUCTEUR = "id_constr";
     private static final String KEY_MODELE = "modele";
     private static final String KEY_MILLESIME = "millesime";
     private static final String KEY_CHASSIS = "n_chassis";
@@ -82,7 +82,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        String CREATE_CONSTRUCTEUR_TABLE = "CREATE TABLE " + TABE_CONSTRUCTEUR + "(" + KEY_ID_CONSTRUCTEUR + " INTEGER PRIMARY KEY," + KEY_NOM_CONSTRUCTEUR
+        String CREATE_CONSTRUCTEUR_TABLE = "CREATE TABLE " + TABLE_CONSTRUCTEUR + "(" + KEY_ID_CONSTRUCTEUR + " INTEGER PRIMARY KEY," + KEY_NOM_CONSTRUCTEUR
                 + " VARCHAR(255) NOT NULL)";
         db.execSQL(CREATE_CONSTRUCTEUR_TABLE);
 
@@ -90,7 +90,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
                 + KEY_ID_CAR + " INTEGER PRIMARY KEY, " + KEY_IMMATRICULATION + " VARCHAR(255), "
                 + KEY_ID_CONSTRUCTEUR + " INTEGER NOT NULL, " + KEY_MODELE + " VARCHAR(255) NOT NULL, "
                 + KEY_MILLESIME + " INTEGER, " + KEY_CHASSIS + " VARCHAR(255), FOREIGN KEY (" + KEY_ID_CONSTRUCTEUR
-                +") REFERENCES " + TABE_CONSTRUCTEUR + "("+ KEY_ID_CONSTRUCTEUR+"))";// + " DEFAULT CHARSET=utf8";
+                +") REFERENCES " + TABLE_CONSTRUCTEUR + "("+ KEY_ID_CONSTRUCTEUR+"))";// + " DEFAULT CHARSET=utf8";
         db.execSQL(CREATE_CAR_TABLE);
 
         String CREATE_FACTURE_TABLE = "CREATE TABLE " + TABLE_FACTURE + "(" + KEY_ID_FACTURE + " INTEGER PRIMARY KEY, "
@@ -121,7 +121,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older table if existed
-        db.execSQL("DROP TABLE IF EXISTS " + TABE_CONSTRUCTEUR);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_CONSTRUCTEUR);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_CAR);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_FACTURE);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_REPARATION);
@@ -228,7 +228,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
             values = new ContentValues();
             values.put(KEY_NOM_CONSTRUCTEUR, constructeurs[i]);
 
-            long id = db.insert(TABE_CONSTRUCTEUR, null, values);
+            long id = db.insert(TABLE_CONSTRUCTEUR, null, values);
             Log.d(TAG, "New constructeur inserted into sqlite: " + id + "   " + constructeurs[i]);
 
         }
@@ -238,24 +238,30 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
 
     public String getConstructeurNameFromID(int id_constr){
-        String selectQuery = "SELECT "+ KEY_NOM_CONSTRUCTEUR +" FROM " + TABE_CONSTRUCTEUR + " WHERE " + KEY_ID_CONSTRUCTEUR + "=?";
-        String[] params = new String[]{ String.valueOf(id_constr) };
+        String selectQuery = "SELECT * FROM " + TABLE_CONSTRUCTEUR + " WHERE " + KEY_ID_CONSTRUCTEUR + "=?";
+        String[] params = new String[]{ String.valueOf(id_constr+1) };
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, params);
         cursor.moveToFirst();
-        if(cursor.getCount()>0){
-            return  cursor.getString(0);
-        }else {
-            new NullPointerException();
-            return null;
+        Log.d("TAG", "GOT COUNT"+ cursor.getCount());
+        if(cursor.getCount()>0) {
+            Log.d("ConstructorNameFromID", cursor.getInt(0) + cursor.getString(1));
+            return cursor.getString(1);
         }
+        return null;
+        //}else {
+            //new NullPointerException();
+            //Log.d("ConstructorNameFromID", "Eroor");
+          //  return null;
+        //}
+
 
     }
     public Car getCarFromId(int id_car){
         Car car = new Car();
 
         //String selectQuery = "SELECT * FROM " + TABLE_CAR + " WHERE " + KEY_ID_CAR + "=?";
-        String selectQuery = "SELECT * FROM " + TABLE_CAR + " a INNER JOIN "+ TABE_CONSTRUCTEUR + " b ON a."+KEY_ID_CONSTRUCTEUR+"=b."+KEY_ID_CONSTRUCTEUR
+        String selectQuery = "SELECT * FROM " + TABLE_CAR + " a INNER JOIN "+ TABLE_CONSTRUCTEUR + " b ON a."+KEY_ID_CONSTRUCTEUR+"=b."+KEY_ID_CONSTRUCTEUR
                 +" WHERE a."+KEY_ID_CAR+ "=?";
 
         String[] params = new String[]{ String.valueOf(id_car) };
@@ -267,7 +273,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
             car.setId_car((int) cursor.getInt(0));
             car.setImmatriculation((String) cursor.getString(1));
-            car.setMarque((String) cursor.getString(7)); //TODO a tester!!
+            car.setMarque((String) cursor.getString(6)); //TODO a tester!!
             car.setModele((String) cursor.getString(3));
             car.setMillesime((int) cursor.getInt(4));
             car.setNchassis((String) cursor.getString(5));
@@ -319,7 +325,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
     public List<Car> getCarsList(){
         List<Car> carList = new ArrayList<Car>();
 
-        String selectQuery = "SELECT * FROM " + TABLE_CAR;
+        String selectQuery = "SELECT * FROM " + TABLE_CAR ;//+ " a  JOIN "+ TABLE_CONSTRUCTEUR + " b ON a."+KEY_ID_CONSTRUCTEUR+"=b."+KEY_ID_CONSTRUCTEUR;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
         //Move to first row
@@ -333,7 +339,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
                 car.setModele((String) cursor.getString(3));
                 car.setMillesime((int) cursor.getInt(4));
                 car.setNchassis((String) cursor.getString(5));
-
+                Log.d(TAG, "Fetching all cars from sqlite: " + car.toString());
 
                 carList.add(car);
 
