@@ -51,7 +51,6 @@ public class InfoCarActivity extends AppCompatActivity implements View.OnClickLi
         setSupportActionBar(toolbar);
 
 
-
         infoCarActivityFragment = new InfoCarActivityFragment();
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
 
@@ -59,7 +58,7 @@ public class InfoCarActivity extends AppCompatActivity implements View.OnClickLi
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         //fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
-        toolbar.setTitle("Info Vehicule");
+
 
         //getSupportFragmentManager().fi
         fab = (FloatingActionButton) findViewById(R.id.fab);

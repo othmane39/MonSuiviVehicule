@@ -46,6 +46,7 @@
             android:layout_alignStart="@+id/marque" />
 
         <TextView
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/n_chassis"
@@ -53,20 +54,32 @@
             android:layout_marginLeft="41dp"
             android:layout_below="@+id/modele"
             android:layout_alignStart="@+id/modele" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@id/n_chassis"
+            android:text="2003"/>
 
 
     </RelativeLayout>
 
 <ScrollView
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:layout_below="@+id/relativeLayout">
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         >
         <LinearLayout
+            android:id="@+id/ll1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:orientation="vertical">
+            <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:orientation="horizontal"
@@ -87,100 +100,113 @@
                 android:layout_marginLeft="5dp"
                 android:text="Vos Mémos"/>
         </LinearLayout>
-        <LinearLayout
+            <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:backgroundTint="@color/white"/>
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/gray">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/white"
-
-                android:text="Aucun mémo à afficher"
-
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
-                />
-            <ListView
-                android:id="@+id/memo_list"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:divider="@null"
-                android:dividerHeight="0dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginLeft="40dp"
-                android:layout_marginRight="40dp"
-                android:layout_marginBottom="5dp"
-                android:layout_centerHorizontal="true"
-                android:background="@drawable/rectangle"
-                />
-        </RelativeLayout>
+                android:background="@color/gray">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
 
+                    android:text="Aucun mémo à afficher"
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:orientation="horizontal"
-            android:background="@color/red">
-
-            <ImageView
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_gravity="center_vertical"
-                android:src="@drawable/ic_facture"
-                android:layout_marginLeft="5dp"
-                android:tint="@color/white"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="15sp"
-                android:textColor="@color/white"
-                android:text="Factures:"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="5dp"/>
-
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    />
+                <ListView
+                    android:id="@+id/memo_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:divider="@null"
+                    android:dividerHeight="0dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginRight="40dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/rectangle"
+                    />
+            </RelativeLayout>
         </LinearLayout>
+
         <LinearLayout
+            android:id="@+id/ll2"
             android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:backgroundTint="@color/white"/>
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/gray"
-            >
-            <TextView
-                android:id="@+id/tv6"
-                android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_below="@id/ll1"
+
+            android:orientation="vertical">
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal"
+                android:background="@color/red">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_facture"
+                    android:layout_marginLeft="5dp"
+                    android:tint="@color/white"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:textColor="@color/white"
+                    android:text="Factures:"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="5dp"/>
+
+            </LinearLayout>
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:backgroundTint="@color/white"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginTop="20dp"
-                android:textColor="@color/white"
-                android:text="Aucune facture à afficher, + pour en créer"/>
-            <ListView
-                android:id="@+id/factures_list"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="20dp"
-                android:divider="@null"
-                android:dividerHeight="2dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginLeft="6dp"
-                android:layout_marginRight="6dp"
+                android:background="@color/gray"
+                >
+                <TextView
+                    android:id="@+id/tv6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="20dp"
 
-                />
-        </RelativeLayout>
+                    android:layout_marginBottom="198dp"
+                    android:textColor="@color/white"
+                    android:text="Aucune facture à afficher, + pour en créer"/>
+                <ListView
+                    android:id="@+id/factures_list"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="20dp"
+                    android:divider="@null"
+                    android:dividerHeight="2dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginRight="6dp"
+
+                    />
+            </RelativeLayout>
+        </LinearLayout>
 
 
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </ScrollView>
 

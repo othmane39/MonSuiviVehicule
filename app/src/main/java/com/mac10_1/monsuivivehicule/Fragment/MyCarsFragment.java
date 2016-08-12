@@ -3,6 +3,7 @@ package com.mac10_1.monsuivivehicule.Fragment;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -45,6 +46,7 @@ public class MyCarsFragment extends Fragment implements View.OnClickListener {
         listViewCar.setAdapter(carAdapter);
         listViewCar.setOnItemClickListener(carAdapter);
         registerForContextMenu(listViewCar);
+
         return rootView;
     }
 

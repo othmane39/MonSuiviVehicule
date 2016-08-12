@@ -3,6 +3,7 @@ package com.mac10_1.monsuivivehicule.Adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,8 +57,9 @@ public class CarAdapter extends ArrayAdapter<Car> implements AdapterView.OnItemC
         viewHolder.chassis.setText(car.getNchassis());
 
         String marque = car.getMarque().toLowerCase();
-        marque.replaceAll(" ", "_");
+        marque = marque.replaceAll(" ", "_");
         String urilogo = "@drawable/"+ marque;
+        Log.d("URI", urilogo);
         int imageResource = getContext().getResources().getIdentifier(urilogo, null, getContext().getPackageName());
         if(imageResource != 0x0) {
             Drawable res = getContext().getResources().getDrawable(imageResource);

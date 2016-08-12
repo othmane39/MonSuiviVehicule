@@ -1,119 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#DD000000">
 
     <RelativeLayout
-        android:id="@+id/rl_one"
         android:layout_width="match_parent"
-        android:layout_height="70dp">
-
+        android:layout_height="match_parent"
+        android:background="@drawable/rectangle"
+        android:layout_centerVertical="true">
         <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent">
-            <TextView
-                android:id="@+id/tx1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:text="Facture N˚ "
-                android:textSize="20sp"
-                android:textColor="@color/black"/>
-            <TextView
-                android:id="@+id/no_facture"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/tx1"
-                android:text="2956374"
-                android:textSize="20sp"
-                android:textColor="@color/black"/>
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignParentEnd="true">
-            <TextView
+            android:layout_margin="5dp">
+        <RelativeLayout
+            android:id="@+id/rl_one"
+            android:layout_width="match_parent"
+            android:layout_height="70dp">
+
+            <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:text="Date "
-                android:textSize="20sp"
-                android:id="@+id/tx2"
-                android:textColor="@color/black"/>
-            <TextView
-                android:id="@id/date_facture"
+                android:layout_height="match_parent">
+                <TextView
+                    android:id="@+id/tx1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="Facture N˚ "
+                    android:textSize="20sp"
+                    android:textColor="@color/black"/>
+                <TextView
+                    android:id="@+id/no_facture"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/tx1"
+                    android:text="2956374"
+                    android:textSize="20sp"
+                    android:textColor="@color/black"/>
+            </RelativeLayout>
+            <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@id/tx2"
-                android:text="26/07/2016"
-                android:textColor="@color/black"
-                android:textSize="20sp"/>
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="Date "
+                    android:textSize="20sp"
+                    android:id="@+id/tx2"
+                    android:textColor="@color/black"/>
+                <TextView
+                    android:id="@id/date_facture"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/tx2"
+                    android:text="26/07/2016"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"/>
+            </RelativeLayout>
         </RelativeLayout>
-    </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/rl_kilo"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_below="@+id/rl_one"
-        >
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
-            android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Kilometrage "
-            android:textSize="20sp"
-            android:textColor="@color/black"/>
-        <TextView
-            android:id="@+id/kilometrage_facture"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="295837"
-            android:textSize="20sp"
-            android:textColor="@color/black"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20dp"
-            android:text="km"
-            android:textColor="@color/black"/>
-        </LinearLayout>
-    </RelativeLayout>
-
-    <ListView
-        android:id="@+id/facture_reparations_list_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/rl_kilo"
-        android:layout_marginBottom="70dp"/>
-
-    <RelativeLayout
-        android:id="@+id/lay_tot"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_alignParentBottom="true">
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
-
-            android:orientation="horizontal">
+        <RelativeLayout
+            android:id="@+id/rl_kilo"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_below="@+id/rl_one"
+            >
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:orientation="horizontal">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Total "
-                android:textSize="30sp"
+                android:text="Kilometrage "
+                android:textSize="20sp"
                 android:textColor="@color/black"/>
             <TextView
-                android:id="@+id/total_facture"
+                android:id="@+id/kilometrage_facture"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="295837"
@@ -123,9 +92,53 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20dp"
-                android:text="Dh"
+                android:text="km"
                 android:textColor="@color/black"/>
-        </LinearLayout>
+            </LinearLayout>
+        </RelativeLayout>
+
+        <ListView
+            android:id="@+id/facture_reparations_list_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rl_kilo"
+            android:layout_marginBottom="70dp"/>
+
+        <RelativeLayout
+            android:id="@+id/lay_tot"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_alignParentBottom="true">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total "
+                    android:textSize="30sp"
+                    android:textColor="@color/black"/>
+                <TextView
+                    android:id="@+id/total_facture"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="295837"
+                    android:textSize="20sp"
+                    android:textColor="@color/black"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:text="Dh"
+                    android:textColor="@color/black"/>
+            </LinearLayout>
+        </RelativeLayout>
+            </RelativeLayout>
     </RelativeLayout>
+
 
 </RelativeLayout>

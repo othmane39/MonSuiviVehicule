@@ -73,7 +73,8 @@
                             android:textColorHint="#333333"
                             android:background="#00000000"
                             android:nextFocusDown="@+id/memo_value"
-                            android:singleLine="true" />
+                            android:singleLine="true"
+                            android:inputType="textCapSentences"/>
 
                         <View
                             android:layout_width="match_parent"

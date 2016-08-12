@@ -78,18 +78,40 @@
                 android:layout_marginLeft="20dp"
                 android:text="Immatriculation du véhicule"/>
 
-            <EditText
-                android:id="@+id/immatriculation_edit"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal"
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
                 android:layout_toRightOf="@+id/tv3"
-                android:textAlignment="center"
-                android:singleLine="true"
-                android:nextFocusDown="@+id/vin_edit"
                 android:layout_marginRight="20dp"
-                android:layout_marginLeft="20dp"/>
+                android:layout_marginLeft="15dp">
+                <Spinner
+                    android:id="@+id/spinner_zone"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content">
+
+                </Spinner>
+                <Spinner
+                    android:id="@+id/spinner_annee"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp">
+
+                </Spinner>
+            <EditText
+                android:id="@+id/immatriculation_edit"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+
+                android:singleLine="true"
+                android:layout_marginLeft="5dp"
+                android:maxLength="7"
+                android:nextFocusDown="@+id/vin_edit"
+                android:inputType="number"
+                />
+            </LinearLayout>
 
         </RelativeLayout>
         <RelativeLayout
@@ -145,6 +167,7 @@
                 android:singleLine="true"
                 android:inputType="number"
                 android:maxLength="4"/>
+
 
         </RelativeLayout>
     </LinearLayout>
