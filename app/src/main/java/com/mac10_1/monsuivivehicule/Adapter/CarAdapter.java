@@ -55,8 +55,9 @@ public class CarAdapter extends ArrayAdapter<Car> implements AdapterView.OnItemC
         viewHolder.immatriculation.setText(car.getImmatriculation());
         viewHolder.chassis.setText(car.getNchassis());
 
-
-        String urilogo = "@drawable/"+ car.getMarque().toLowerCase();
+        String marque = car.getMarque().toLowerCase();
+        marque.replaceAll(" ", "_");
+        String urilogo = "@drawable/"+ marque;
         int imageResource = getContext().getResources().getIdentifier(urilogo, null, getContext().getPackageName());
         if(imageResource != 0x0) {
             Drawable res = getContext().getResources().getDrawable(imageResource);

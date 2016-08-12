@@ -21,7 +21,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
     private static final String TAG = SQLiteHandler.class.getSimpleName();
 
-    private static final int DATABASE_VERSION = 23;
+    private static final int DATABASE_VERSION = 26;
 
     private static final String DATABASE_NAME = "suiviVehicules";
 
@@ -462,18 +462,73 @@ public class SQLiteHandler extends SQLiteOpenHelper {
     }
 
     public boolean removeFactureById(int id){
+
+        removeAllReparationByFactureId(id);
         SQLiteDatabase db = this.getWritableDatabase();
         int r = db.delete(TABLE_FACTURE, KEY_ID_FACTURE + "=" + id, null);
         db.close();
+        Log.d(TAG, "FACTURE "+ id + " removed sucessfully");
         return r>0;
     }
 
     public boolean removeCarById(int id){
+
+        removeAllFactureByCarId(id);
+        removeAllMemoByCarId(id);
         SQLiteDatabase db = this.getWritableDatabase();
         int r = db.delete(TABLE_CAR, KEY_ID_CAR + "=" + id, null);
         db.close();
+
+        Log.d(TAG, "CAR "+ id + " removed sucessfully");
         return r>0;
     }
+
+    public boolean removeReparationById(int id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        int r = db.delete(TABLE_REPARATION, KEY_ID_REP + "=" + id, null);
+        db.close();
+
+        Log.d(TAG, "REPARATION "+ id + " removed sucessfully");
+        return  r>0;
+    }
+
+    public boolean removeAllFactureByCarId(int id) {
+
+        List<Facture> list = getFacturesList(id);
+        if (list.size() > 0) {
+            for (Facture f : list) {
+                removeAllReparationByFactureId(f.getIdFact());
+                Log.d(TAG, "REPARATION " + id + " removed sucessfully");
+            }
+        }
+        SQLiteDatabase db = this.getWritableDatabase();
+        int r = db.delete(TABLE_FACTURE, KEY_ID_CAR + "=" + id, null);
+
+        Log.d(TAG, "ALL FACTURE " + id + " removed sucessfully");
+        return r > 0;
+
+
+
+    }
+
+    public boolean removeAllMemoByCarId(int id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        int r = db.delete(TABLE_MEMO_CAR, KEY_ID_CAR+"="+id, null);
+        db.close();
+
+        Log.d(TAG, "ALL MEMO "+ id + " removed sucessfully");
+        return r>0;
+    }
+
+    public boolean removeAllReparationByFactureId(int id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        int r = db.delete(TABLE_REPARATION, KEY_ID_FACTURE+"="+id, null);
+        db.close();
+
+        Log.d(TAG, "ALL REPARATION "+ id + " removed sucessfully " + r);
+        return r>0;
+    }
+
 
 
 }

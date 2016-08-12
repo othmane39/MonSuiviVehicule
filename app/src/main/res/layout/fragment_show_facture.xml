@@ -88,7 +88,7 @@
     </RelativeLayout>
 
     <ListView
-        android:id="@+id/reparations_list_view"
+        android:id="@+id/facture_reparations_list_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/rl_kilo"

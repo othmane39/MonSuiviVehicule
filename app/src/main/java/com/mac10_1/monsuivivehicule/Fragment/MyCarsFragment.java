@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,6 +60,11 @@ public class MyCarsFragment extends Fragment implements View.OnClickListener {
 
         if(v.getId() == R.id.list_view_cars)
             menuItems[0] = "Supprimer vehicule";
+
+        for (int i = 0; i<menuItems.length; i++) {
+            menu.add(Menu.NONE, i, i, menuItems[i]);
+        }
+        Log.e("TAG", "onCreate");
 
 
     }

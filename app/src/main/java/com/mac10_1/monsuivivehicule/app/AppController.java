@@ -33,13 +33,14 @@ public class AppController extends Application {
             SharedPreferences.Editor editor = settings.edit();
             editor.putBoolean("FIRST_RUN", true);
             editor.commit();
-        } else {
+        } else {/*
             String[] constructeurs = JSONUtils.getArrayConstructeurs(getApplicationContext());
             db.addAllConstructeursBrands(constructeurs);
             settings = getSharedPreferences("PREFS_NAME", 0);
             SharedPreferences.Editor editor = settings.edit();
             editor.putBoolean("FIRST_RUN", true);
             editor.commit();
+            */
 
         }
 

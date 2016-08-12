@@ -57,7 +57,7 @@
             android:layout_gravity="right|center_vertical"
             android:layout_margin="@dimen/fab_margin"
             android:layout_marginLeft="6dp"
-            android:src="@drawable/ic_facture"
+            android:src="@drawable/ic_note_add"
             android:tint="@color/white"
             app:backgroundTint="@color/colorFAB"
             app:fabSize="mini" />

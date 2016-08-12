@@ -9,8 +9,12 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
@@ -32,9 +36,12 @@ public class InfoCarActivity extends AppCompatActivity implements View.OnClickLi
 
     InfoCarFABHandler fabHandler;
 
+    private View viewForContextMenu;
 
     FrameLayout fab_facture, fab_memo;
     RelativeLayout fab1_2_container;
+
+    int menuSwitcher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -167,5 +174,59 @@ public class InfoCarActivity extends AppCompatActivity implements View.OnClickLi
         else if(infoCarActivityFragment != null && infoCarActivityFragment.isVisible()) {
             finish();
         }
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+        //menu.setHeaderTitle("Vidange");
+        String[] menuItems = new String[1];
+        if (v.getId()==R.id.memo_list) {
+            menuItems[0] = "Supprimer memo";
+            menuSwitcher = 1;
+        }
+        else if(v.getId()==R.id.factures_list) {
+            menuItems[0] = "Supprimer facture";
+            menuSwitcher = 2;
+        }
+        else  if(v.getId() == R.id.reparations_list_view) {
+            menuItems[0] = "Supprimer reparation";
+            menuSwitcher = 3;
+        }else if(v.getId() == R.id.facture_reparations_list_view) {
+            menuItems[0] = "Supprimer reparation";
+            menuSwitcher = 4;
+        }
+        else menuSwitcher = -1;
+        for (int i = 0; i<menuItems.length; i++) {
+            menu.add(Menu.NONE, i, i, menuItems[i]);
+        }
+        Log.e("TAG", "onCreate");
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+        int menuItemIndex = item.getItemId();
+
+        if(menuItemIndex == 0){
+            if(menuSwitcher ==1) {
+                infoCarActivityFragment.removeMemo(info.position);
+
+            } else if(menuSwitcher ==2){
+                infoCarActivityFragment.removeFacture(info.position);
+            }
+            else if(menuSwitcher ==3){
+                addFactureFragment.removeReparation(info.position);
+            }
+            else if(menuSwitcher ==4){
+                infoCarActivityFragment.getFactureFragment().removeReparation(info.position);
+            }
+
+
+
+        }
+
+        return true;
     }
 }

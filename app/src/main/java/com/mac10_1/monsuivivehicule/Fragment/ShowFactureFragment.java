@@ -33,6 +33,7 @@ public class ShowFactureFragment extends Fragment {
     private ListView reparation_list;
     private ReparationCarAdapter reparationCarAdapter;
     private TextView total;
+    private SQLiteHandler db;
 
 
     @Override
@@ -43,10 +44,12 @@ public class ShowFactureFragment extends Fragment {
         facture = b.getParcelable("Facture");
         Log.d("SHOWFACTURE", facture.toString());
 
+        db = new SQLiteHandler(getContext());
+
         no_facture = (TextView) rootView.findViewById(R.id.no_facture);
         date = (TextView) rootView.findViewById(R.id.date_facture);
         kilometrage = (TextView) rootView.findViewById(R.id.kilometrage_facture);
-        reparation_list = (ListView) rootView.findViewById(R.id.reparations_list_view);
+        reparation_list = (ListView) rootView.findViewById(R.id.facture_reparations_list_view);
         total = (TextView) rootView.findViewById(R.id.total_facture);
 
 
@@ -60,9 +63,21 @@ public class ShowFactureFragment extends Fragment {
         reparationCarAdapter = new ReparationCarAdapter(getContext(), facture.getReparations());
         reparation_list.setAdapter(reparationCarAdapter);
 
+        registerForContextMenu(reparation_list);
 
 
         return rootView;
+    }
+
+    public boolean removeReparation(int id){
+
+        if(id<=facture.getReparations().size()){
+            Reparation r = facture.getReparations().get(id);
+            db.removeReparationById(r.getIdRep());
+            return true;
+        }
+        return false;
+
     }
 
 }

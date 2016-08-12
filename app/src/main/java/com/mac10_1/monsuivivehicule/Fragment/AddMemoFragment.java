@@ -69,6 +69,7 @@ public class AddMemoFragment extends Fragment implements View.OnClickListener {
 
     }
 
+
     @Override
     public void onClick(View v) {
         getFragmentManager().popBackStack();

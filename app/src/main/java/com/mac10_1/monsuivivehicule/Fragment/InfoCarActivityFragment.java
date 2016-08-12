@@ -30,6 +30,7 @@ import com.mac10_1.monsuivivehicule.utils.Car;
 import com.mac10_1.monsuivivehicule.utils.Facture;
 import com.mac10_1.monsuivivehicule.utils.MemoCar;
 import com.mac10_1.monsuivivehicule.Adapter.MemoCarAdapter;
+import com.mac10_1.monsuivivehicule.utils.Reparation;
 import com.mac10_1.monsuivivehicule.utils.SQLiteHandler;
 
 import java.util.List;
@@ -95,7 +96,9 @@ public class InfoCarActivityFragment extends Fragment implements AdapterView.OnI
 
         registerForContextMenu(factureListView);
 
-        String urilogo = "@drawable/"+ car.getMarque().toLowerCase();
+        String marque = car.getMarque().toLowerCase();
+        marque.replaceAll(" ", "_");
+        String urilogo = "@drawable/"+ marque;
         int imageResource = getContext().getResources().getIdentifier(urilogo, null, getContext().getPackageName());
         if(imageResource != 0x0) {
             Drawable res = getContext().getResources().getDrawable(imageResource);
@@ -103,6 +106,8 @@ public class InfoCarActivityFragment extends Fragment implements AdapterView.OnI
         }else {
             logo.setImageResource(R.drawable.nologo);
         }
+
+
 
         justifyListViewHeightBasedOnChildren(memoListView);
         justifyListViewHeightBasedOnChildren(factureListView);
@@ -112,49 +117,6 @@ public class InfoCarActivityFragment extends Fragment implements AdapterView.OnI
 
     }
 
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-
-            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
-            //menu.setHeaderTitle("Vidange");
-            String[] menuItems = new String[1];
-            if (v.getId()==R.id.memo_list) {
-                menuItems[0] = "Supprimer memo";
-                viewForContextMenu = memoListView;
-            }
-            else if(v.getId()==R.id.factures_list) {
-                menuItems[0] = "Supprimer facture";
-                viewForContextMenu = factureListView;
-            }
-
-            for (int i = 0; i<menuItems.length; i++) {
-                menu.add(Menu.NONE, i, i, menuItems[i]);
-            }
-            Log.e("TAG", "onCreate");
-        }
-
-
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
-        int menuItemIndex = item.getItemId();
-
-        if(menuItemIndex == 0){
-            if(viewForContextMenu == memoListView) {
-                if (db.removeMemoById(memoCarList.get(info.position).getIdMemo())) {
-                    Log.d("DB", "memo removed successfully");
-                    refreshMemo();
-                }
-            } else if(viewForContextMenu == factureListView){
-                if (db.removeFactureById(facturesList.get(info.position).getIdFact())){
-                    Log.d("DB", "facture removed successfully");
-                    refreshFactures();
-                }
-            }
-        }
-
-        return true;
-    }
 
     public void refreshMemo(){
         memoCarList = db.getMemoCarList(car.getId_car());
@@ -201,6 +163,7 @@ public class InfoCarActivityFragment extends Fragment implements AdapterView.OnI
         return factureFragment;
     }
 
+
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Facture facture = facturesList.get(position);
@@ -218,6 +181,30 @@ public class InfoCarActivityFragment extends Fragment implements AdapterView.OnI
         fab.hide();
 
 
+    }
+
+    public boolean removeMemo(int i){
+        if (db.removeMemoById(memoCarList.get(i).getIdMemo())) {
+            Log.d("DB", "memo removed successfully");
+            refreshMemo();
+            return true;
+        }
+        return false;
+    }
+
+    public boolean removeFacture(int i){
+
+        if (i<=facturesList.size()){
+            if(facturesList.get(i).getReparations() != null) {
+                db.removeAllReparationByFactureId(facturesList.get(i).getIdFact());
+
+            }
+            db.removeFactureById(facturesList.get(i).getIdFact());
+
+            refreshFactures();
+            return true;
+        }
+        return false;
     }
 
 

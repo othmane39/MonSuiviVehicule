@@ -5,11 +5,15 @@ import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ListAdapter;
@@ -98,6 +102,7 @@ public class AddFactureFragment extends Fragment implements View.OnClickListener
         animHandler = new AddFactureAnimHandler(add_reparation_button, reparation_edit);
 
         add_reparation_button.setOnClickListener(this);
+        registerForContextMenu(reparation_list);
         //save_facture_button.setOnClickListener(this);
         justifyListViewHeightBasedOnChildren(reparation_list);
 
@@ -209,6 +214,22 @@ public class AddFactureFragment extends Fragment implements View.OnClickListener
 
 
 
+            return true;
+        }
+        return false;
+    }
+
+
+
+    public boolean removeReparation(int i){
+        if(facture.getReparations() != null) {
+            Reparation r = facture.getReparations().get(i);
+            facture.subFromTotalFacture(r.getCout());
+            facture.getReparations().remove(r);
+            reparationCarAdapter.notifyDataSetChanged();
+            justifyListViewHeightBasedOnChildren(reparation_list);
+
+            Log.d("DB", "reparation removed successfully");
             return true;
         }
         return false;

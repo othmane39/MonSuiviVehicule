@@ -85,6 +85,11 @@ public class Facture implements Parcelable{
         Log.d("ADDTOTAL", "New Total" + totalFacture);
     }
 
+    public void subFromTotalFacture(double toSub){
+        totalFacture -= toSub;
+        Log.d("SUBTOTAL", "New Total" + totalFacture);
+    }
+
     @Override
     public String toString() {
         return "Facture{" +

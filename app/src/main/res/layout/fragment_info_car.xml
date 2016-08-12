@@ -12,6 +12,8 @@
         android:layout_height="wrap_content"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="10dp"
 
         tools:context=".Fragment.InfoCarActivityFragment"
         tools:showIn="@layout/activity_info_car"
@@ -29,6 +31,7 @@
             android:id="@+id/marque"
             android:text="VW"
             android:textSize="30sp"
+            android:textColor="@color/gray"
             android:layout_alignParentTop="true"
             android:layout_toEndOf="@+id/logo"
             android:layout_marginStart="37dp" />
@@ -37,6 +40,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/modele"
             android:text="Golf IV"
+            android:textColor="@color/gray"
             android:textSize="30sp"
             android:layout_below="@+id/marque"
             android:layout_alignStart="@+id/marque" />
@@ -62,31 +66,119 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         >
-    <ListView
-        android:id="@+id/memo_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:divider="@null"
-        android:dividerHeight="0dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
-        android:layout_centerHorizontal="true"
-        />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:background="@color/green">
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_attach_file"
+                android:layout_marginLeft="5dp"
+                android:tint="@color/white"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textColor="@color/white"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="5dp"
+                android:text="Vos Mémos"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:backgroundTint="@color/white"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/gray">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+
+                android:text="Aucun mémo à afficher"
+
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                />
+            <ListView
+                android:id="@+id/memo_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@null"
+                android:dividerHeight="0dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginBottom="5dp"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/rectangle"
+                />
+        </RelativeLayout>
 
 
-    <ListView
-        android:id="@+id/factures_list"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="20dp"
-        android:divider="@null"
-        android:dividerHeight="2dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="6dp"
-        android:layout_marginRight="6dp"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:background="@color/red">
 
-        />
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_facture"
+                android:layout_marginLeft="5dp"
+                android:tint="@color/white"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textColor="@color/white"
+                android:text="Factures:"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="5dp"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:backgroundTint="@color/white"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/gray"
+            >
+            <TextView
+                android:id="@+id/tv6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/white"
+                android:text="Aucune facture à afficher, + pour en créer"/>
+            <ListView
+                android:id="@+id/factures_list"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="20dp"
+                android:divider="@null"
+                android:dividerHeight="2dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="6dp"
+
+                />
+        </RelativeLayout>
+
+
 
     </LinearLayout>
 
