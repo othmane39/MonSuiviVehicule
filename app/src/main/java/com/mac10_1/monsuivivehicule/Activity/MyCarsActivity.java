@@ -30,13 +30,14 @@ public class MyCarsActivity extends AppCompatActivity implements View.OnClickLis
     MyCarsFragment myCarsFragment;
     AddCarFragment addCarFragment;
 
+    Toolbar toolbar;
     FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_cars);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
 
@@ -111,6 +112,7 @@ public class MyCarsActivity extends AppCompatActivity implements View.OnClickLis
             ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
             ft.addToBackStack(null);
             ft.commit();
+            toolbar.setTitle("Ajouter Véhicule");
             fab.setImageResource(R.drawable.ic_save_white);
         }
     }
@@ -124,6 +126,7 @@ public class MyCarsActivity extends AppCompatActivity implements View.OnClickLis
 
 
             fab.setImageResource(android.R.drawable.ic_input_add);
+            toolbar.setTitle("Mes Véhicule");
             getFragmentManager().popBackStack();
 
 

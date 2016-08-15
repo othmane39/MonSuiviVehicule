@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.app.SearchableInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.Toolbar;
 
 import com.mac10_1.monsuivivehicule.R;
 import com.mac10_1.monsuivivehicule.app.AppController;
@@ -41,7 +43,6 @@ public class AddCarFragment extends Fragment implements View.OnClickListener, Ad
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView =  inflater.inflate(R.layout.fragment_add_newcar, container, false);
-
 
 
 
@@ -109,6 +110,10 @@ public class AddCarFragment extends Fragment implements View.OnClickListener, Ad
     @Override
     public void onClick(View v) {
         //for the goback Relaative Layout
+        android.support.v7.widget.Toolbar toolbar= (android.support.v7.widget.Toolbar) getActivity().findViewById(R.id.toolbar);
+        toolbar.setTitle("Mes Véhicules");
+        FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+        fab.setImageResource(android.R.drawable.ic_input_add);
         getFragmentManager().popBackStack();
     }
 
@@ -147,7 +152,7 @@ public class AddCarFragment extends Fragment implements View.OnClickListener, Ad
 
     public String setupImmatri(){
         Log.d("TEST", new String(immatriculation_zone+"-"+immatriculation_annee+"-"+immatriculation_edit.getText().toString()));
-        return new String(immatriculation_zone+"-"+immatriculation_annee+"-"+immatriculation_edit.getText().toString());
+        return new String(immatriculation_zone+" - "+immatriculation_annee+" - "+immatriculation_edit.getText().toString());
     }
 
 

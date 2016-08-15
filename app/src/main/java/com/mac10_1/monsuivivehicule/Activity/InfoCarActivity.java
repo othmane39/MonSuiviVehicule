@@ -28,7 +28,7 @@ import com.mac10_1.monsuivivehicule.utils.InfoCarFABHandler;
 public class InfoCarActivity extends AppCompatActivity implements View.OnClickListener {
 
     FloatingActionButton fab;
-    Toolbar toolbar;
+    //Toolbar toolbar;
     InfoCarActivityFragment infoCarActivityFragment;
     AddMemoFragment addMemoFragment;
     AddFactureFragment addFactureFragment;
@@ -47,8 +47,8 @@ public class InfoCarActivity extends AppCompatActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info_car);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        //toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
 
 
         infoCarActivityFragment = new InfoCarActivityFragment();
@@ -85,7 +85,7 @@ public class InfoCarActivity extends AppCompatActivity implements View.OnClickLi
             if (addMemoFragment != null && addMemoFragment.isVisible()) {
                 if(addMemoFragment.saveMemo()) {
 
-                    toolbar.setTitle("Info Vehicule");
+                    //toolbar.setTitle("Info Vehicule");
                     Snackbar.make(view, "Mémo enregistré", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                     fab.setImageResource(android.R.drawable.ic_input_add);
@@ -127,7 +127,7 @@ public class InfoCarActivity extends AppCompatActivity implements View.OnClickLi
             fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
-            toolbar.setTitle("Ajouter Mémo");
+            //toolbar.setTitle("Ajouter Mémo");
             fab.setImageResource(R.drawable.ic_save_white);
         }else if(view == fab_facture){
 
@@ -139,7 +139,7 @@ public class InfoCarActivity extends AppCompatActivity implements View.OnClickLi
             fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
-            toolbar.setTitle("Ajouter Facture");
+            //toolbar.setTitle("Ajouter Facture");
             fab.setImageResource(R.drawable.ic_save_white);
         }
 
@@ -153,14 +153,14 @@ public class InfoCarActivity extends AppCompatActivity implements View.OnClickLi
 
         if(addMemoFragment != null && addMemoFragment.isVisible()){
 
-            toolbar.setTitle("Info Vehicule");
+            //toolbar.setTitle("Info Vehicule");
             fab.setImageResource(android.R.drawable.ic_input_add);
             getFragmentManager().popBackStack();
 
 
         }
         else if(addFactureFragment != null && addFactureFragment.isVisible()){
-            toolbar.setTitle("Info Vehicule");
+            //toolbar.setTitle("Info Vehicule");
             fab.setImageResource(android.R.drawable.ic_input_add);
             getFragmentManager().popBackStack();
 
